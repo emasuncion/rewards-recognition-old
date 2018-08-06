@@ -1,0 +1,66 @@
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+#app {
+  flex: 1;
+}
+
+.admin-welcome-box {
+  padding-bottom: 5em;
+}
+
+a.site-footer-social-media {
+  color: #000;
+}
+
+.heart {
+  color:red;
+}
+
+.admin-vote-link {
+  margin-top: 13px;
+}
+
+.vote-title {
+  text-align: center;
+}
+
+.welcome-message {
+  padding: 13px 0;
+}
+
+.textarea {
+  resize: none !important;
+}
+
+.vote-value-creator-card, .vote-people-developer-card, .vote-business-opeartor-card {
+  margin-bottom: 2em;
+}
+
+.submit-vote-button {
+  margin-right: 2em;
+}
+
+.vote-errors {
+  list-style-type: square;
+}
+
+.alert {
+  padding: .75rem 2.25rem !important;
+}
+
+.admin-cards-header {
+  text-align: center;
+}
+
+.admin-view-voters-button {
+  margin-top: 2em;
+}
+
+div.welcome-message > p {
+  line-height: 2em;
+  margin: 15px 0;
+}
