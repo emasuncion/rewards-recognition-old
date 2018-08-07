@@ -16,7 +16,7 @@ class CreateEmployeesTable extends Migration
         Schema::create('employees', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name', 32)->notNull();
-            $table->tinyInteger('voted', 1)->notNull();
+            $table->tinyInteger('voted')->notNull();
         });
 
         DB::table('employees')->insert([
@@ -37,7 +37,7 @@ class CreateEmployeesTable extends Migration
             ['name' => 'May Buenaventura', 'voted' => 0],
             ['name' => 'Gerard Gahol', 'voted' => 0],
             ['name' => 'Sarah Quijano', 'voted' => 0],
-            ['name' => 'Meg Lafuente', , 'voted' => 0],
+            ['name' => 'Meg Lafuente', 'voted' => 0],
             ['name' => 'Carl Godoy', 'voted' => 0],
             ['name' => 'Renzo Sunico', 'voted' => 0],
             ['name' => 'Jes Tañada', 'voted' => 0],

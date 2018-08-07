@@ -70,9 +70,10 @@
                 <div class="top-right links">
                     @auth
                         @if(auth()->user()->isAdmin())
-                            <a href="{{ url('/admin')}}">Admin</a>
+                            <a href="{{ url('/admin')}}">Home</a>
+                        @else
+                            <a href="{{ url('/home') }}">Home</a>
                         @endif
-                        <a href="{{ url('/home') }}">Home</a>
                     @else
                         <a href="{{ route('login') }}">Login</a>
                         <a href="{{ route('register') }}">Register</a>
