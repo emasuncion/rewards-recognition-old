@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Employee;
 
 class User extends Authenticatable
 {
@@ -36,5 +37,17 @@ class User extends Authenticatable
     public function isAdmin()
     {
         return $this->type === self::ADMIN_TYPE;
+    }
+
+    public function voted()
+    {
+        $employee = new Employee;
+        return $employee->didVote();
+    }
+
+    public function votingOpen()
+    {
+        $nominate = new Nominate;
+        return $nominate->isOpen();
     }
 }

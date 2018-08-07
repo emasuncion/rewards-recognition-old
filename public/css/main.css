@@ -56,11 +56,16 @@ a.site-footer-social-media {
   text-align: center;
 }
 
-.admin-view-voters-button {
-  margin-top: 2em;
-}
-
-div.welcome-message > p {
+div.welcome-message > p, .message-body {
   line-height: 2em;
   margin: 15px 0;
+}
+
+.nominees {
+  cursor: pointer;
+}
+
+.soon {
+  font-size: 10px !important;
+  vertical-align: super;
 }

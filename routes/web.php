@@ -24,5 +24,6 @@ Route::get('admin', 'AdminController@index')
 Route::get('vote', 'VoteController@index')->name('vote');
 Route::get('voters', 'VoteController@viewVoters')->name('voters');
 Route::post('vote', 'VoteController@submitVote');
+Route::get('results', 'ResultController@index')->name('results');
 
 Route::get('settings', 'HomeController@index')->name('settings');

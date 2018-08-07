@@ -52,7 +52,11 @@ class VoteController extends Controller
         Employee::where('name', auth()->user()->name)
             ->update(['voted' => 1]);
 
-        return redirect('home');
+        if (auth()->user()->isAdmin()) {
+            return redirect('admin');
+        } else {
+            return redirect('home');
+        }
     }
 
     public function viewVoters()

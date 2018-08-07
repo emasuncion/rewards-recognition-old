@@ -11,14 +11,6 @@
     </div>
 
     <div class="row">
-      @include('layouts.positionCard', ['positions' => ['Value Creator', 'People Developer', 'Business Operator']]);
-    </div>
-
-    <div class="row field is-grouped is-grouped-centered admin-view-voters-button">
-      <p class="control">
-        <a class="button" href="/voters">
-          View voters
-        </a>
-      </p>
+      @include('layouts.adminTools', ['tools' => ['Voters', 'Results', 'Graph']]);
     </div>
 @endsection

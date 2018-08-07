@@ -13,13 +13,23 @@
   <div class="card vote-card">
       <div class="card-content">
         <p class="title vote-title">
-          Vote now
+          @if(!auth()->user()->voted())
+            Vote now
+          @else
+            Thank you for voting
+          @endif
         </p>
       </div>
       <footer class="card-footer">
         <p class="card-footer-item">
           <span>
-            <a href="/vote">Start</a>
+            @if(!auth()->user()->voted())
+              <a href="/vote">Start</a>
+            @elseif(auth()->user()->votingOpen())
+              See <a href="#">partial results</a>
+            @else
+              See <a href="#">results</a>
+            @endif
           </span>
         </p>
       </footer>
