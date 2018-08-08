@@ -93,4 +93,101 @@ $(document).ready(function () {
       }
     });
   });
+
+  // Add vote
+  // Value Creator
+  $('.add-vote-vc').click(function (e) {
+    e.preventDefault();
+    var voted = $(this).parent().prev().text();
+    $.ajax({
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      },
+      type: 'POST',
+      url: '/addVote/',
+      data: {
+        nominee: voted,
+        data: null,
+        position: 'value-creator'
+      },
+      success: function (result) {
+        swal({
+          title: "Voted!",
+          icon: "success",
+          button: "Aww yiss!",
+        })
+        .then(results => {
+          $('.modal').removeClass('is-active');
+          location.reload();
+        });
+      },
+      error: function (result) {
+        swal("Ooops!", "Sorry, something went wrong", "error");
+      }
+    });
+  });
+  // People Developer
+  $('.add-vote-pd').click(function (e) {
+    e.preventDefault();
+    var voted = $(this).parent().prev().text();
+    $.ajax({
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      },
+      type: 'POST',
+      url: '/addVote/',
+      data: {
+        nominee: voted,
+        data: null,
+        position: 'people-developer'
+      },
+      success: function (result) {
+        swal({
+          title: "Voted!",
+          icon: "success",
+          button: "Aww yiss!",
+        })
+        .then(results => {
+          $('.modal').removeClass('is-active');
+          location.reload();
+        });
+      },
+      error: function (result) {
+        swal("Ooops!", "Sorry, something went wrong", "error");
+      }
+    });
+  });
+// Business Operator
+  $('.add-vote-bo').click(function (e) {
+    e.preventDefault();
+    var voted = $(this).parent().prev().text();
+    $.ajax({
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      },
+      type: 'POST',
+      url: '/addVote/',
+      data: {
+        nominee: voted,
+        data: null,
+        position: 'business-operator'
+      },
+      success: function (result) {
+        swal({
+          title: "Voted!",
+          icon: "success",
+          button: "Aww yiss!",
+        })
+        .then(results => {
+          $('.modal').removeClass('is-active');
+          location.reload();
+        });
+      },
+      error: function (result) {
+        swal("Ooops!", "Sorry, something went wrong", "error");
+      }
+    });
+  });
+
+
 });

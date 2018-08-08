@@ -15,12 +15,12 @@ class CreateVotesTable extends Migration
     {
         Schema::create('votes', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('nominee_value_creator', 32)->notNullable();
-            $table->string('nominee_people_developer', 32)->notNullable();
-            $table->string('nominee_business_operator', 32)->notNullable();
-            $table->text('explanation_value_creator', 255)->notNullable();
-            $table->text('explanation_people_developer', 255)->notNullable();
-            $table->text('explanation_business_operator', 255)->notNullable();
+            $table->string('nominee_value_creator', 32)->nullable();
+            $table->string('nominee_people_developer', 32)->nullable();
+            $table->string('nominee_business_operator', 32)->nullable();
+            $table->text('explanation_value_creator', 255)->nullable();
+            $table->text('explanation_people_developer', 255)->nullable();
+            $table->text('explanation_business_operator', 255)->nullable();
             $table->timestamps();
         });
     }

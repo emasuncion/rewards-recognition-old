@@ -1,53 +1,49 @@
-@extends('layouts.app')
+@extends('default.result')
 
-@section('content')
-  <div class="container">
-    <form method="POST" action="/vote">
-      @csrf
-      <div class="card vote-value-creator-card">
-        <header class="card-header">
-          <p class="card-header-title">
-            Value Creator
-          </p>
-        </header>
-        <div class="card-content">
-          @include('layouts.voteBody', ['employees' => $employees, 'position' => 'Value Creator', 'shorthand' => 'value_creator'])
-        </div>
-      </div>
+@section('result-value-creator')
+  <table>
+    @php
+      $char = range('A', 'Z');
+    @endphp
+    @foreach($valueCreatorVotes as $key => $vcVote)
+      <tr class="nominees">
+        <td onclick="var el=document.getElementById('modal-value-creator-{{ $vcVote->nominee }}');
+            el.className+=' is-active'">{{ $vcVote->nominee }}</td>
+        <td><i class="fas fa-plus add-vote-vc"></i></td>
+      </tr>
+      @include('modals.valueCreator', ['name' => $vcVote->nominee, 'explanations' => $valueCreatorExplanations])
+    @endforeach
+  </table>
+@endsection
 
-      <div class="card vote-people-developer-card">
-        <header class="card-header">
-          <p class="card-header-title">
-            People Developer
-          </p>
-        </header>
-        <div class="card-content">
-          @include('layouts.voteBody', ['employees' => $employees, 'position' => 'People Developer', 'shorthand' => 'people_developer'])
-        </div>
-      </div>
+@section('result-people-developer')
+  <table>
+    @php
+      $char = range('A', 'Z');
+    @endphp
+    @foreach($peopleDeveloperVotes as $key => $pdVote)
+      <tr class="nominees">
+        <td onclick="var el=document.getElementById('modal-people-developer-{{ $pdVote->nominee }}');
+            el.className+=' is-active'">{{ $pdVote->nominee }}</td>
+        <td><i class="fas fa-plus add-vote-pd"></i></td>
+      </tr>
+      @include('modals.peopleDeveloper', ['name' => $pdVote->nominee, 'explanations' => $peopleDeveloperExplanations])
+      @endforeach
+  </table>
+@endsection
 
-      <div class="card vote-business-opeartor-card">
-        <header class="card-header">
-          <p class="card-header-title">
-            Business Operator
-          </p>
-        </header>
-        <div class="card-content">
-          @include('layouts.voteBody', ['employees' => $employees, 'position' => 'Business Operator', 'shorthand' => 'business_operator'])
-        </div>
-      </div>
-      @if (count($errors) > 0)
-        <div class="container">
-         <div class="alert alert-danger">
-            <ul>
-               @foreach ($errors->all() as $error)
-                  <li class="vote-errors">{{ $error }}</li>
-               @endforeach
-            </ul>
-         </div>
-       </div>
-      @endif
-      <button class="button is-info is-rounded is-pulled-right submit-vote-button">Submit</button>
-    </form>
-  </div>
+@section('result-business-operator')
+  <table>
+    @php
+      $char = range('A', 'Z');
+    @endphp
+    @foreach($businessOperatorVotes as $key => $boVote)
+      <tr class="nominees">
+        <td onclick="var el=document.getElementById('modal-business-operator-{{ $boVote->nominee }}');
+            el.className+=' is-active'">{{ $boVote->nominee }}</td>
+        <td><i class="fas fa-plus add-vote-bo"></i></td>
+      </tr>
+      @include('modals.businessOperator', ['name' => $boVote->nominee, 'explanations' => $businessOperatorExplanations])
+      @endforeach
+  </table>
 @endsection

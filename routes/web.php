@@ -21,11 +21,12 @@ Route::get('home', 'HomeController@index')->name('home');
 Route::get('admin', 'AdminController@index')
     ->middleware('is_admin')
     ->name('admin');
-Route::get('vote', 'VoteController@index')->name('vote');
+Route::get('nominate', 'VoteController@index')->name('nominate');
+Route::get('vote', 'VoteController@vote')->name('vote');
 Route::get('voters', 'VoteController@viewVoters')
     ->middleware('is_admin')
     ->name('voters');
-Route::post('vote', 'VoteController@submitVote');
+Route::post('nominate', 'VoteController@submitVote');
 Route::get('results', 'ResultController@index')
     ->middleware('is_admin')
     ->name('results');
@@ -47,3 +48,5 @@ Route::post('settings/off', 'AdminController@turnOff')
 // Handle AJAX for resetting votes
 Route::post('settings/reset', 'AdminController@reset')
     ->middleware('is_admin');
+
+Route::post('addVote', 'VoteController@addVote');

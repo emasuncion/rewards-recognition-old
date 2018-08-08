@@ -15,7 +15,7 @@
       <div class="col align-self-center admin-welcome-box">
         <article class="message is-info justify-content-center">
           <div class="message-header">
-            <p>People who did not yet vote</p>
+            <p>People who did not vote</p>
           </div>
           @yield('not-yet-voted-body')
         </article>

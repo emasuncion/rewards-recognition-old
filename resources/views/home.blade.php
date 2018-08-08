@@ -23,11 +23,15 @@
       <footer class="card-footer">
         <p class="card-footer-item">
           <span>
-            @if(!auth()->user()->voted() && auth()->user()->votingOpen())
-              <a href="/vote" class="button is-primary">
-                Start
+            @if(auth()->user()->votingOpen())
+              @if(!auth()->user()->voted())
+              <a href="/vote" class="button is-link">
+                Start voting
               </a>
-            @elseif(auth()->user()->votingOpen())
+              <a href="/nominate" class="button is-primary">
+                Nominate
+              </a>
+              @endif
               <a href="/results/partial" class="button is-warning">
                 See partial results
               </a>
