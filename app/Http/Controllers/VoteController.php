@@ -38,15 +38,6 @@ class VoteController extends Controller
 
     public function submitVote(Request $request)
     {
-        $validateData = $request->validate([
-            'nominee_value_creator' => 'required',
-            'nominee_people_developer' => 'required',
-            'nominee_business_operator' => 'required',
-            'explanation_value_creator' => 'required',
-            'explanation_people_developer' => 'required',
-            'explanation_business_operator' => 'required',
-        ]);
-
         Vote::Create($request->all());
 
         Employee::where('name', auth()->user()->name)
