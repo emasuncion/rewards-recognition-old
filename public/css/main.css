@@ -69,3 +69,17 @@ div.welcome-message > p, .message-body {
   font-size: 10px !important;
   vertical-align: super;
 }
+
+div.control a:hover, span a, span a:hover, div.admin-settings-body a:hover {
+  text-decoration: none !important;
+}
+
+.voting-status-text {
+  font-weight: 400;
+  margin-right: 5em;
+  vertical-align: sub;
+}
+
+.admin-settings-body, .admin-cards-body {
+  text-align: center !important;
+}

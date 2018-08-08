@@ -28,6 +28,10 @@
                         <li class="nav-item">
                             <a class="nav-link heading2" href="/admin">Admin</a>
                         </li>
+                    @else
+                         <li class="nav-item">
+                            <a class="nav-link heading2" href="/home">Home</a>
+                        </li>
                     @endif
                     @if(auth()->user()->isAdmin() && !auth()->user()->voted())
                         <li class="nav-item">

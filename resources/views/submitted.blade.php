@@ -1,4 +1,4 @@
-@extends('admin.result')
+@extends('default.result')
 
 @section('result-value-creator')
   <table>

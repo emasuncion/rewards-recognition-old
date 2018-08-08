@@ -17,13 +17,13 @@
       </p>
     </div>
     <footer class="card-footer">
-      <div class="control">
+      <div class="control col admin-cards-body">
         @if($view === 'graph')
-          <a class="button is-success" disabled>
+          <a class="button is-success is-rounded" disabled>
             View {{ $view }}
           </a>
         @else
-          <a class="button is-success" href="/{{ $view }}">
+          <a class="button is-success is-rounded" href="/{{ $view }}">
             View {{ $view }}
           </a>
         @endif
