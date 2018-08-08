@@ -33,7 +33,7 @@
                             <a class="nav-link heading2" href="/home">Home</a>
                         </li>
                     @endif
-                    @if(auth()->user()->isAdmin() && !auth()->user()->voted())
+                    @if(auth()->user()->isAdmin() && !auth()->user()->voted() && auth()->user()->votingOpen())
                         <li class="nav-item">
                             <a class="nav-link heading2" href="/vote">Vote</a>
                         </li>
