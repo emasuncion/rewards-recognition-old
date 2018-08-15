@@ -20,6 +20,7 @@ Auth::routes();
 // GET Routes
 Route::get('home', 'HomeController@index')
     ->name('home');
+Route::get('changePassword', 'HomeController@showChangePasswordForm');
 Route::get('admin', 'AdminController@index')
     ->middleware('is_admin')
     ->name('admin');
@@ -43,11 +44,16 @@ Route::get('settings', 'AdminController@settings')
     ->name('settings');
 
 // POST Routes
+Route::post('changePassword','HomeController@changePassword')
+    ->name('changePassword');
 Route::post('addVote', 'VoteController@addVote');
 Route::post('nominate', 'VoteController@submitVote');
+Route::post('admin/changeRole', 'AdminController@changeRole')
+    ->middleware('is_admin');
 Route::post('settings/on', 'AdminController@turnOn')
     ->middleware('is_admin');
 Route::post('settings/off', 'AdminController@turnOff')
     ->middleware('is_admin');
 Route::post('settings/reset', 'AdminController@reset')
     ->middleware('is_admin');
+Route::post('addMember', 'AdminController@addMember');

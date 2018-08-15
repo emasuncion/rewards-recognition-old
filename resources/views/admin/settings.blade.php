@@ -33,12 +33,12 @@
         </div>
       </div>
     </div> <!-- End of row -->
-    <div class="row">
-      <div class="col">
+    <div class="row justify-content-center mb-4">
+      <div class="col-md-8">
         <div class="card">
           <header class="card-header">
             <p class="card-header-title is-centered">
-              Manage User Profiles (not yet fully functional)
+              Manage User Profiles (no delete yet)
             </p>
           </header>
           <div class="card-content">
@@ -48,22 +48,23 @@
           </div>
         </div>
       </div>
+    </div> {{-- End of row --}}
 
+    <div class="row">
       <div class="col">
         <div class="card">
           <header class="card-header">
             <p class="card-header-title is-centered">
-              Quarter
+              Add a member/account
             </p>
           </header>
           <div class="card-content">
             <div class="content">
-              @yield('settings-quarter')
+              @yield('settings-add-member')
             </div>
           </div>
         </div>
       </div>
-
-    </div> {{-- End of row --}}
+    </div>
   </div> {{-- End of container --}}
 @endsection

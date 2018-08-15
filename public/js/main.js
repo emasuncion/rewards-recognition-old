@@ -10,6 +10,20 @@ function checkIfDoneVoting() {
 }
 
 $(document).ready(function () {
+  $('tr.nominees > td').click(function(e) {
+    e.preventDefault();
+    let up = $('.fa-caret-up');
+    let down = $('.fa-caret-down');
+
+    if (down.is(':visible')) {
+      down.hide();
+      down.next('.fa-caret-up').show();
+    } else {
+      up.hide();
+      up.prev('.fa-caret-down').show();
+    }
+  });
+
   // Turn on the voting AJAX request
   $('#vote-on').click(function (e) {
     e.preventDefault();
@@ -208,11 +222,36 @@ $(document).ready(function () {
     });
   });
 
-<<<<<<< HEAD
   // Add ajax call here
-  $('.admin-checkbox').change(function () {
-    // todo code for ajax call
+  $('.admin-checkbox').change(function (e) {
+    e.preventDefault();
+    let employee = $(this).parent().parent().prev().text();
+    let checked = $(this).is(':checked');
+
+    $.ajax({
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      },
+      type: 'POST',
+      url: '/admin/changeRole/',
+      data: {
+        isAdmin: checked,
+        employee: employee
+      },
+      success: function (result) {
+        swal({
+          title: "Successfully changed the Role!",
+          icon: "success",
+          button: "Okay",
+        })
+        .then(results => {
+          $('.modal').removeClass('is-active');
+          location.reload();
+        });
+      },
+      error: function (result) {
+        swal("Ooops!", "Sorry, something went wrong", "error");
+      }
+    });
   });
-=======
->>>>>>> 77a4a0ad9620b3f82210a6b5f37cabe80a07990d
 });

@@ -52,6 +52,9 @@
                                 {{ __('Settings') }}
                             </a>
                             @endif
+                            <a class="dropdown-item" href="{{ route('changePassword') }}">
+                                {{ __('Change Password') }}
+                            </a>
                             <a class="dropdown-item" href="{{ route('logout') }}"
                                onclick="event.preventDefault();
                                              document.getElementById('logout-form').submit();">
