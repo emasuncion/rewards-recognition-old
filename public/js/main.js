@@ -2,6 +2,13 @@
  * Custom JavaScript file for the Rewards and Recognition app
  * @author Eleirold Asuncion <emasuncion.dev@gmail.com>
  */
+
+function checkIfDoneVoting() {
+  if ($('.add-vote-vc').is(':hidden') && $('.add-vote-pd').is(':hidden') && $('.add-vote-bo').is(':hidden')) {
+    return true;
+  }
+}
+
 $(document).ready(function () {
   // Turn on the voting AJAX request
   $('#vote-on').click(function (e) {
@@ -118,7 +125,11 @@ $(document).ready(function () {
         })
         .then(results => {
           $('.modal').removeClass('is-active');
-          location.reload();
+          $('.add-vote-vc').hide();
+          let done = checkIfDoneVoting();
+          if (done) {
+            window.location.href = '/admin';
+          }
         });
       },
       error: function (result) {
@@ -149,7 +160,11 @@ $(document).ready(function () {
         })
         .then(results => {
           $('.modal').removeClass('is-active');
-          location.reload();
+          $('.add-vote-pd').hide();
+          let done = checkIfDoneVoting();
+          if (done) {
+            window.location.href = '/admin';
+          }
         });
       },
       error: function (result) {
@@ -180,7 +195,11 @@ $(document).ready(function () {
         })
         .then(results => {
           $('.modal').removeClass('is-active');
-          location.reload();
+          $('.add-vote-bo').hide();
+          let done = checkIfDoneVoting();
+          if (done) {
+            window.location.href = '/admin';
+          }
         });
       },
       error: function (result) {
@@ -188,6 +207,5 @@ $(document).ready(function () {
       }
     });
   });
-
 
 });
