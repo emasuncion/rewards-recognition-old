@@ -2,7 +2,7 @@
 
 @section('content')
   <div class="container">
-    <div class="row">
+    <div class="row mb-4">
       <div class="col">
         <div class="card">
           <header class="card-header">
@@ -22,7 +22,7 @@
         <div class="card">
           <header class="card-header">
             <p class="card-header-title is-centered">
-              Reset Voters
+              Reset Votes
             </p>
           </header>
           <div class="card-content">
@@ -32,21 +32,38 @@
           </div>
         </div>
       </div>
-
-      {{-- <div class="col">
+    </div> <!-- End of row -->
+    <div class="row">
+      <div class="col">
         <div class="card">
           <header class="card-header">
             <p class="card-header-title is-centered">
-              Clean Data
+              Manage User Profiles (not yet fully functional)
             </p>
           </header>
           <div class="card-content">
             <div class="content">
-              @yield('settings-clean-data')
+              @yield('settings-manage-users')
             </div>
           </div>
         </div>
-      </div> --}}
-    </div> <!-- End of row -->
+      </div>
+
+      <div class="col">
+        <div class="card">
+          <header class="card-header">
+            <p class="card-header-title is-centered">
+              Quarter
+            </p>
+          </header>
+          <div class="card-content">
+            <div class="content">
+              @yield('settings-quarter')
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div> {{-- End of row --}}
   </div> {{-- End of container --}}
 @endsection

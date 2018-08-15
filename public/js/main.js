@@ -189,5 +189,8 @@ $(document).ready(function () {
     });
   });
 
-
+  // Add ajax call here
+  $('.admin-checkbox').change(function () {
+    // todo code for ajax call
+  });
 });

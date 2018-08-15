@@ -17,36 +17,37 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('home', 'HomeController@index')->name('home');
+// GET Routes
+Route::get('home', 'HomeController@index')
+    ->name('home');
 Route::get('admin', 'AdminController@index')
     ->middleware('is_admin')
     ->name('admin');
-Route::get('nominate', 'VoteController@index')->name('nominate');
-Route::get('vote', 'VoteController@vote')->name('vote');
+Route::get('nominate', 'VoteController@index')
+    ->name('nominate');
+Route::get('vote', 'VoteController@vote')
+    ->middleware('voted')
+    ->name('vote');
 Route::get('voters', 'VoteController@viewVoters')
     ->middleware('is_admin')
     ->name('voters');
-Route::post('nominate', 'VoteController@submitVote');
 Route::get('results', 'ResultController@index')
     ->middleware('is_admin')
     ->name('results');
-//Final results
 Route::get('results/submitted', 'ResultController@submitted')
     ->name('finalResults');
-// Partial results
-Route::get('results/partial', 'ResultController@partial')
+Route::get('results/partial', 'ResultController@index')
     ->name('partialResults');
-
 Route::get('settings', 'AdminController@settings')
     ->middleware('is_admin')
     ->name('settings');
-// Handle AJAX for turning on/off nomination
+
+// POST Routes
+Route::post('addVote', 'VoteController@addVote');
+Route::post('nominate', 'VoteController@submitVote');
 Route::post('settings/on', 'AdminController@turnOn')
     ->middleware('is_admin');
 Route::post('settings/off', 'AdminController@turnOff')
     ->middleware('is_admin');
-// Handle AJAX for resetting votes
 Route::post('settings/reset', 'AdminController@reset')
     ->middleware('is_admin');
-
-Route::post('addVote', 'VoteController@addVote');

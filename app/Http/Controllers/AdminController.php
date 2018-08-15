@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Nominate;
+use App\User;
 use App\Employee;
 
 class AdminController extends Controller
@@ -27,7 +28,10 @@ class AdminController extends Controller
 
     public function settings()
     {
-        return view('settings');
+        $employees = User::where('active', 1)
+                    ->orderBy('name', 'asc')
+                    ->get();
+        return view('settings', ['employees' => $employees]);
     }
 
     public function turnOn(Request $request)
