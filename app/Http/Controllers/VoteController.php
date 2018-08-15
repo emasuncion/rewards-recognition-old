@@ -123,6 +123,8 @@ class VoteController extends Controller
             default:
                 break;
         }
+        Employee::where('name', auth()->user()->name)
+            ->update(['voted' => 1]);
         return response()->json([
             'success' => 'true'
         ]);
