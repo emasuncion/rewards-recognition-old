@@ -4,50 +4,55 @@
   <div class="container">
     <form method="POST" action="/nominate">
       @csrf
-      <div class="card vote-value-creator-card">
-        <header class="card-header">
-          <p class="card-header-title">
-            Value Creator
-          </p>
-        </header>
-        <div class="card-content">
-          @include('layouts.voteBody', ['employees' => $employees, 'position' => 'Value Creator', 'shorthand' => 'value_creator'])
+      <div class="row justify-content-center">
+        <div class="col-md-4 card vote-value-creator-card mr-4">
+          <header class="card-header">
+            <p class="card-header-title">
+              Value Creator
+            </p>
+          </header>
+          <div class="card-content">
+            @include('layouts.voteBody', ['employees' => $employees, 'position' => 'Value Creator', 'shorthand' => 'value_creator'])
+          </div>
         </div>
-      </div>
 
-      <div class="card vote-people-developer-card">
-        <header class="card-header">
-          <p class="card-header-title">
-            People Developer
-          </p>
-        </header>
-        <div class="card-content">
-          @include('layouts.voteBody', ['employees' => $employees, 'position' => 'People Developer', 'shorthand' => 'people_developer'])
+        <div class="col-md-4 card vote-people-developer-card mr-4">
+          <header class="card-header">
+            <p class="card-header-title">
+              People Developer
+            </p>
+          </header>
+          <div class="card-content">
+            @include('layouts.voteBody', ['employees' => $employees, 'position' => 'People Developer', 'shorthand' => 'people_developer'])
+          </div>
         </div>
-      </div>
 
-      <div class="card vote-business-opeartor-card">
-        <header class="card-header">
-          <p class="card-header-title">
-            Business Operator
-          </p>
-        </header>
-        <div class="card-content">
-          @include('layouts.voteBody', ['employees' => $employees, 'position' => 'Business Operator', 'shorthand' => 'business_operator'])
+        <div class="col-md-4 card vote-business-opeartor-card">
+          <header class="card-header">
+            <p class="card-header-title">
+              Business Operator
+            </p>
+          </header>
+          <div class="card-content">
+            @include('layouts.voteBody', ['employees' => $employees, 'position' => 'Business Operator', 'shorthand' => 'business_operator'])
+          </div>
         </div>
-      </div>
-      @if (count($errors) > 0)
-        <div class="container">
-         <div class="alert alert-danger">
-            <ul>
-               @foreach ($errors->all() as $error)
-                  <li class="vote-errors">{{ $error }}</li>
-               @endforeach
-            </ul>
+
+        @if (count($errors) > 0)
+          <div class="container">
+           <div class="alert alert-danger">
+              <ul>
+                 @foreach ($errors->all() as $error)
+                    <li class="vote-errors">{{ $error }}</li>
+                 @endforeach
+              </ul>
+           </div>
          </div>
-       </div>
-      @endif
-      <button class="button is-info is-rounded is-pulled-right submit-vote-button">Submit</button>
+        @endif
+      </div>
+      <div class="row justify-content-center">
+        <button class="button is-info is-rounded is-pulled-right submit-vote-button">Submit</button>
+      </div>
     </form>
   </div>
 @endsection

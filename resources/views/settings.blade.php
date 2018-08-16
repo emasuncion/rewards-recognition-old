@@ -27,7 +27,7 @@
     <tr>
         <td><h6>Active Member/s</h6></td>
         <td><h6>Admin</h6></td>
-        <td><h6>Delete</h6></td>
+        <td style="text-align: center;"><h6>Delete</h6></td>
     </tr>
     @foreach($employees as $e)
     <tr>
@@ -60,7 +60,7 @@
                   <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
 
                   <div class="col-md-6">
-                      <input id="name" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" value="{{ old('name') }}" required autofocus>
+                      <input id="name" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" value="{{ old('name') }}" required>
 
                       @if ($errors->has('name'))
                           <span class="invalid-feedback" role="alert">

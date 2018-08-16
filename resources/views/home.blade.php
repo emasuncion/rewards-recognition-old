@@ -4,11 +4,44 @@
 <div class="row justify-content-center">
   <div class="col-md-10">
     <div class="welcome-message">
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam ac mauris porttitor, cursus nibh a, blandit enim. Curabitur non augue libero. Nullam a ex lacinia, volutpat nunc ut, blandit diam. Morbi et ex luctus, lacinia velit at, bibendum ligula. Fusce convallis ullamcorper libero vitae mattis. Aliquam aliquet commodo mauris, et ornare ipsum auctor quis. In non nisi quis odio pellentesque interdum quis ut ex. Pellentesque egestas pharetra dui vel volutpat. Donec rhoncus malesuada dictum. Maecenas a orci ex. Suspendisse suscipit velit tellus, nec imperdiet mauris bibendum eget. Pellentesque id diam quis odio elementum fringilla. Suspendisse ut posuere dolor, nec tempor dolor. Nulla facilisi.</p>
+      <div class="mb-4">
+        <p class="h3">A chance to be acknowledged; a chance to commend fellow colleagues.</p>
+        <p style="text-align: center;">Recognize efforts by participating on our online nomination and voting board.</p>
+        <br/>
 
-      <p>Quisque malesuada sit amet mauris sed sagittis. Donec tempor nulla vel nulla mattis, non tincidunt mauris pellentesque. Cras tempus lorem et dignissim semper. Aenean iaculis, ex sed facilisis facilisis, quam purus imperdiet urna, eget eleifend justo magna et risus. Donec eu porta odio. In gravida placerat erat, non varius sem rutrum vel. Pellentesque maximus ullamcorper velit sed ornare. Mauris efficitur rutrum ante eget cursus. Fusce consequat est in massa egestas auctor. Vestibulum magna velit, dignissim sed erat nec, pharetra viverra nibh. Ut suscipit sem non egestas venenatis. Ut vulputate, mauris quis lacinia rutrum, felis lectus pharetra turpis, in euismod elit augue sed leo.</p>
+      <div style="text-align: center">
+        <p><u>You may:</u></p>
+        <p>Nominate to count as one vote.</p>
+        <p>Nominate to add more points of recognition.</p>
+        <p>Vote for a colleague whom is already nominated for you. </p>
+      </div>
 
-      <p>Phasellus interdum tellus erat, eu luctus ipsum suscipit posuere. In vel suscipit libero. Integer tincidunt convallis velit, nec porttitor est pretium non. Sed volutpat viverra iaculis. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Pellentesque ornare mattis viverra. Mauris varius vel libero ac commodo. Nulla ut feugiat tellus, a luctus ipsum.</p>
+        <p class="mb-2"><strong>Categories:</strong></p>
+        <ol>
+          <li>
+            <strong>People Developer</strong>
+            <ul>
+              <li>Individual that exemplify leadership skill of developing other people to do better job as well as continuously improving oneself technically and functionally in the organization.</li>
+              <li>Being able to recognize achievements and contributions within the team.</li>
+            </ul>
+          </li>
+
+          <li>
+            <strong>Value Creator</strong>
+            <ul>
+              <li>Individual that exemplify improvements to delivery outcomes and continuously achieving higher client satisfaction on the delivery.</li>
+              <li>Being able to provide continuous improvement and sustainable process changes within the team.</li>
+            </ul>
+          </li>
+
+          <li>
+            <strong>Business Operator</strong>
+            <ul>
+              <li>Individual that exemplify Delivery Excellence and meet schedule and budget on time.</li>
+            </ul>
+          </li>
+        </ol>
+      </div>
     </div>
   </div>
 </div>
@@ -17,7 +50,7 @@
       <div class="card-header">
         <p class="title vote-title">
           @if(!auth()->user()->voted())
-            Vote now
+            Actions
           @else
             Thank you for voting
           @endif
@@ -29,7 +62,7 @@
             @if(auth()->user()->votingOpen())
               @if(!auth()->user()->voted())
               <a href="/vote" class="button is-link">
-                Start voting
+                Vote
               </a>
               <a href="/nominate" class="button is-primary">
                 Nominate

@@ -157,3 +157,8 @@ td.admin-delete-td {
   padding-left: 0 !important;
   padding-right: 0 !important;
 }
+
+.vote-value-creator-card, .vote-people-developer-card, .vote-business-opeartor-card {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}

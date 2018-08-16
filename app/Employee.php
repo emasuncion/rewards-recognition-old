@@ -18,7 +18,7 @@ class Employee extends Model
 
     public function didVote()
     {
-        $data = $this::all()->where('name', auth()->user()->name)->pluck('voted')[0];
-        return $data === self::VOTED;
+        $data = $this::all()->firstWhere('name', auth()->user()->name);
+        return $data->voted === self::VOTED;
     }
 }
