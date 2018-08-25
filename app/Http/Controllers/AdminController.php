@@ -30,10 +30,10 @@ class AdminController extends Controller
 
     public function settings()
     {
-        $employees = User::where('active', 1)
-                    ->orderBy('name', 'asc')
-                    ->get();
-        return view('settings', ['employees' => $employees]);
+        $users = User::where('active', 1)
+                    ->orderBy('first_name', 'asc')
+                    ->paginate(5);
+        return view('settings', compact('users'));
     }
 
     public function turnOn(Request $request)

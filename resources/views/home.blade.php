@@ -61,16 +61,15 @@
           <span>
             @if(auth()->user()->votingOpen())
               @if(!auth()->user()->voted())
-              <a href="/vote" class="button is-link">
-                Vote
-              </a>
-              <a href="/nominate" class="button is-primary">
-                Nominate
-              </a>
+                <a href="/nominate" class="button is-primary">
+                  Nominate
+                </a>
+                <a href="/vote" class="button is-link">
+                  Vote
+                </a>
+              @else
+                <p>Thank you for voting!</p>
               @endif
-              <a href="/results/partial" class="button is-warning">
-                See partial results
-              </a>
             @else
               <a href="/results/submitted" class="button is-success">
                 See results

@@ -8,7 +8,7 @@
     </header>
     <section class="modal-card-body">
       <ul>
-        @foreach($businessOperatorExplanations as $boe)
+        @foreach($businessOperatorNominations as $boe)
           @if($boe->nominee === $name)
             <li>{{ $boe->explanation_business_operator }}</li>
           @endif

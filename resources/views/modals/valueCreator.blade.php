@@ -8,7 +8,7 @@
     </header>
     <section class="modal-card-body">
       <ul>
-        @foreach($valueCreatorExplanations as $vce)
+        @foreach($valueCreatorNominations as $vce)
           @if($vce->nominee === $name)
             <li>{{ $vce->explanation_value_creator }}</li>
           @endif

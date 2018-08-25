@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateNominationTable extends Migration
+class CreateUserTypeTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,15 @@ class CreateNominationTable extends Migration
      */
     public function up()
     {
-        Schema::create('nomination', function (Blueprint $table) {
-            $table->boolean('isVotingOpen')->notNull()->default(1);
+        Schema::create('user_type', function (Blueprint $table) {
+            $table->increments('id')->unsigned();
+            $table->string('type');
         });
 
-        DB::table('nomination')->insert([
-            'isVotingOpen' => 1
+        DB::table('user_type')->insert([
+            ['type' => 'admin'],
+            ['type' => 'nominee'],
+            ['type' => 'guest'],
         ]);
     }
 
@@ -29,6 +32,6 @@ class CreateNominationTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('nomination');
+        Schema::dropIfExists('user_type');
     }
 }

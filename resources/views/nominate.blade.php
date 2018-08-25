@@ -5,25 +5,25 @@
     <form method="POST" action="/nominate">
       @csrf
       <div class="row justify-content-center">
-        <div class="col-md-4 card vote-value-creator-card mr-4">
+        <div class="col-md-4 card vote-value-creator-card">
           <header class="card-header">
             <p class="card-header-title">
               Value Creator
             </p>
           </header>
           <div class="card-content">
-            @include('layouts.voteBody', ['employees' => $employees, 'position' => 'Value Creator', 'shorthand' => 'value_creator'])
+            @include('layouts.voteBody', ['users' => $users, 'position' => 'Value Creator', 'shorthand' => 'value_creator'])
           </div>
         </div>
 
-        <div class="col-md-4 card vote-people-developer-card mr-4">
+        <div class="col-md-4 card vote-people-developer-card">
           <header class="card-header">
             <p class="card-header-title">
               People Developer
             </p>
           </header>
           <div class="card-content">
-            @include('layouts.voteBody', ['employees' => $employees, 'position' => 'People Developer', 'shorthand' => 'people_developer'])
+            @include('layouts.voteBody', ['users' => $users, 'position' => 'People Developer', 'shorthand' => 'people_developer'])
           </div>
         </div>
 
@@ -34,7 +34,7 @@
             </p>
           </header>
           <div class="card-content">
-            @include('layouts.voteBody', ['employees' => $employees, 'position' => 'Business Operator', 'shorthand' => 'business_operator'])
+            @include('layouts.voteBody', ['users' => $users, 'position' => 'Business Operator', 'shorthand' => 'business_operator'])
           </div>
         </div>
 

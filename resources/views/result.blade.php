@@ -2,7 +2,7 @@
 
 @section('result-value-creator')
   <table>
-    @foreach($valueCreatorVotes as $vcVote)
+    @foreach($valueCreatorNominations as $vcVote)
     @php
       $shortName = preg_replace('/ /', '', $vcVote->nominee);
     @endphp
@@ -11,9 +11,9 @@
           <div class="collapse" id="vc{{ $shortName }}">
             <div class="card card-body">
               <ul>
-                @foreach($valueCreatorExplanations as $vce)
+                @foreach($valueCreatorNominations as $vce)
                   @if($vce->nominee === $vcVote->nominee)
-                    <li>{{ $vce->explanation_value_creator }}</li>
+                    <li>{{ $vce->explanation }}</li>
                   @endif
                 @endforeach
               </ul>
@@ -27,7 +27,7 @@
 
 @section('result-people-developer')
   <table>
-    @foreach($peopleDeveloperVotes as $pdVote)
+    @foreach($peopleDeveloperNominations as $pdVote)
     @php
       $shortName = preg_replace('/ /', '', $pdVote->nominee);
     @endphp
@@ -36,9 +36,9 @@
           <div class="collapse" id="pd{{ $shortName }}">
             <div class="card card-body">
               <ul>
-                @foreach($peopleDeveloperExplanations as $pde)
+                @foreach($peopleDeveloperNominations as $pde)
                   @if($pde->nominee === $pdVote->nominee)
-                    <li>{{ $pde->explanation_people_developer }}</li>
+                    <li>{{ $pde->explanation }}</li>
                   @endif
                 @endforeach
               </ul>
@@ -52,7 +52,7 @@
 
 @section('result-business-operator')
   <table>
-    @foreach($businessOperatorVotes as $boVote)
+    @foreach($businessOperatorNominations as $boVote)
     @php
       $shortName = preg_replace('/ /', '', $boVote->nominee);
     @endphp
@@ -61,9 +61,9 @@
           <div class="collapse" id="bo{{ $shortName }}">
             <div class="card card-body">
               <ul>
-                @foreach($businessOperatorExplanations as $boe)
+                @foreach($businessOperatorNominations as $boe)
                   @if($boe->nominee === $boVote->nominee)
-                    <li>{{ $boe->explanation_business_operator }}</li>
+                    <li>{{ $boe->explanation }}</li>
                   @endif
                 @endforeach
               </ul>

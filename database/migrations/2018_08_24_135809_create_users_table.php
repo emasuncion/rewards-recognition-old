@@ -14,14 +14,20 @@ class CreateUsersTable extends Migration
     public function up()
     {
         Schema::create('users', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->string('name');
+            $table->string('first_name', 32);
+            $table->string('last_name', 32);
+            $table->string('username', 32);
             $table->string('email')->unique();
             $table->string('password');
-            $table->string('type');
+            $table->integer('type')->unsigned();
             $table->tinyInteger('active')->default(1)->notNull();
             $table->rememberToken();
             $table->timestamps();
+            $table->foreign('type')
+                ->references('id')
+                ->on('user_type');
         });
     }
 
@@ -32,6 +38,8 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        DB::statement('SET FOREIGN_KEY_CHECKS = 0');
+        Schema::drop('users');
+        DB::statement('SET FOREIGN_KEY_CHECKS = 1');
     }
 }

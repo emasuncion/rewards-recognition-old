@@ -34,7 +34,7 @@
       </div>
     </div> <!-- End of row -->
     <div class="row justify-content-center mb-4">
-      <div class="col-md-8">
+      <div class="col-md-6">
         <div class="card">
           <header class="card-header">
             <p class="card-header-title is-centered">
@@ -48,10 +48,8 @@
           </div>
         </div>
       </div>
-    </div> {{-- End of row --}}
 
-    <div class="row">
-      <div class="col">
+      <div class="col-md-6">
         <div class="card">
           <header class="card-header">
             <p class="card-header-title is-centered">

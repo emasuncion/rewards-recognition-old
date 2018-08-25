@@ -24,12 +24,12 @@ Route::get('changePassword', 'HomeController@showChangePasswordForm');
 Route::get('admin', 'AdminController@index')
     ->middleware('is_admin')
     ->name('admin');
-Route::get('nominate', 'VoteController@index')
+Route::get('nominate', 'NominationController@index')
     ->name('nominate');
-Route::get('vote', 'VoteController@vote')
+Route::get('vote', 'NominationController@vote')
     ->middleware('voted')
     ->name('vote');
-Route::get('voters', 'VoteController@viewVoters')
+Route::get('voters', 'NominationController@viewVoters')
     ->middleware('is_admin')
     ->name('voters');
 Route::get('results', 'ResultController@index')
@@ -46,8 +46,8 @@ Route::get('settings', 'AdminController@settings')
 // POST Routes
 Route::post('changePassword','HomeController@changePassword')
     ->name('changePassword');
-Route::post('addVote', 'VoteController@addVote');
-Route::post('nominate', 'VoteController@submitVote');
+Route::post('addVote', 'NominationController@addVote');
+Route::post('nominate', 'NominationController@submitVote');
 Route::post('admin/changeRole', 'AdminController@changeRole')
     ->middleware('is_admin');
 Route::post('settings/on', 'AdminController@turnOn')

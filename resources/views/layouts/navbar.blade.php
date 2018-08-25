@@ -24,16 +24,13 @@
                         <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
                     </li>
                 @else
-                    @if(auth()->user()->isAdmin())
-                        <li class="nav-item">
-                            <a class="nav-link heading2" href="/admin">Admin</a>
-                        </li>
-                    @else
-                         <li class="nav-item">
-                            <a class="nav-link heading2" href="/home">Home</a>
-                        </li>
-                    @endif
-                    @if(auth()->user()->isAdmin() && !auth()->user()->voted() && auth()->user()->votingOpen())
+                     <li class="nav-item">
+                        <a class="nav-link heading2" href="/admin">Home</a>
+                    </li>
+                    @php
+                        $routes = ['results', 'vote', 'nominate'];
+                    @endphp
+                    @if(auth()->user()->isAdmin() && !auth()->user()->voted() && auth()->user()->votingOpen() && (in_array(Route::current()->getName(), $routes)))
                         <li class="nav-item">
                             <a class="nav-link heading2" href="/vote">Vote</a>
                         </li>
@@ -43,7 +40,7 @@
                     @endif
                     <li class="nav-item dropdown">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                            {{ Auth::user()->name }} <span class="caret"></span>
+                            {{ auth()->user()->first_name }} <span class="caret"></span>
                         </a>
 
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">

@@ -8,8 +8,8 @@
         <div class="select is-fullwidth">
           <select name="nominee_{{ $shorthand }}">
             <option disabled id="default" selected>--- Please select ---</option>
-            @foreach($employees as $employee)
-              <option id="{{ $employee->id }}">{{$employee->name}}</option>
+            @foreach($users as $user)
+              <option id="{{ $user->id }}">{{$user->first_name . ' ' . $user->last_name }} </option>
             @endforeach
           </select>
         </div>
@@ -25,7 +25,7 @@
   <div class="field-body">
     <div class="field">
       <div class="control">
-        <textarea name="explanation_{{ $shorthand }}" class="textarea" placeholder="Give a brief description for your nominee for the position {{ $position }}"></textarea>
+        <textarea name="explanation_{{ $shorthand }}" class="textarea" placeholder="Give a brief description of your nominee for the position {{ $position }}"></textarea>
       </div>
     </div>
   </div>
