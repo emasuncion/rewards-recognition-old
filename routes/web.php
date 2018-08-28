@@ -50,10 +50,8 @@ Route::post('addVote', 'NominationController@addVote');
 Route::post('nominate', 'NominationController@submitVote');
 Route::post('admin/changeRole', 'AdminController@changeRole')
     ->middleware('is_admin');
-Route::post('settings/on', 'AdminController@turnOn')
-    ->middleware('is_admin');
-Route::post('settings/off', 'AdminController@turnOff')
-    ->middleware('is_admin');
 Route::post('settings/reset', 'AdminController@reset')
     ->middleware('is_admin');
 Route::post('addMember', 'AdminController@addMember');
+Route::post('admin/changeQuarter', 'AdminController@changeQuarter')
+    ->middleware('is_admin');

@@ -3,7 +3,7 @@
 @section('content')
   <div class="container">
     <div class="row">
-      <div class="col align-self-center admin-welcome-box">
+      <div class="col admin-welcome-box">
         <article class="message is-info justify-content-center">
           <div class="message-header">
             <p>People who already voted</p>
@@ -12,7 +12,7 @@
         </article>
       </div>
 
-      <div class="col align-self-center admin-welcome-box">
+      <div class="col admin-welcome-box">
         <article class="message is-info justify-content-center">
           <div class="message-header">
             <p>People who did not vote</p>

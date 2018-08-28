@@ -6,7 +6,7 @@
     <div class="field is-narrow">
       <div class="control">
         <div class="select is-fullwidth">
-          <select name="nominee_{{ $shorthand }}">
+          <select class="select-nomination" name="nominee_{{ $shorthand }}">
             <option disabled id="default" selected>--- Please select ---</option>
             @foreach($users as $user)
               <option id="{{ $user->id }}">{{$user->first_name . ' ' . $user->last_name }} </option>

@@ -24,67 +24,6 @@ $(document).ready(function () {
     }
   });
 
-  // Turn on the voting AJAX request
-  $('#vote-on').click(function (e) {
-    e.preventDefault();
-    $.ajax({
-      headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-      },
-      type: 'POST',
-      url: '/settings/on/',
-      data: {
-        isvotingOpen: 1
-      },
-      success: function (result) {
-        swal({
-          title: "Voting is now open!",
-          text: "Users can now start voting",
-          icon: "success",
-          button: "Aww yiss!",
-        })
-        .then(results => {
-          $('.modal').removeClass('is-active');
-          location.reload();
-        });
-
-      },
-      error: function (result) {
-        swal("Ooops!", "Sorry, something went wrong", "error");
-      }
-    })
-  });
-
-  // Turn off the voting AJAX request
-  $('#vote-off').click(function (e) {
-    e.preventDefault();
-    $.ajax({
-      headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-      },
-      type: 'POST',
-      url: '/settings/off/',
-      data: {
-        isvotingOpen: 0
-      },
-      success: function (result) {
-        swal({
-          title: "Voting is now closed!",
-          text: "Users can't access voting now",
-          icon: "success",
-          button: "Ok",
-        })
-        .then(results => {
-          $('.modal').removeClass('is-active');
-          location.reload();
-        });
-      },
-      error: function (result) {
-        swal("Ooops!", "Sorry, something went wrong", "error");
-      }
-    })
-  });
-
   // Reset the votes
   $('#reset-votes').click(function (e) {
     e.preventDefault();
@@ -222,10 +161,9 @@ $(document).ready(function () {
     });
   });
 
-  // Add ajax call here
-  $('.admin-checkbox').change(function (e) {
+  $('.change-role').change(function (e) {
     e.preventDefault();
-    let employee = $(this).parent().parent().prev().text();
+    let userId = $(this).parent().parent().prev().attr('id');
     let checked = $(this).is(':checked');
 
     $.ajax({
@@ -236,7 +174,7 @@ $(document).ready(function () {
       url: '/admin/changeRole/',
       data: {
         isAdmin: checked,
-        employee: employee
+        userId: userId
       },
       success: function (result) {
         swal({
@@ -246,7 +184,7 @@ $(document).ready(function () {
         })
         .then(results => {
           $('.modal').removeClass('is-active');
-          location.reload();
+          // location.reload();
         });
       },
       error: function (result) {
@@ -254,4 +192,51 @@ $(document).ready(function () {
       }
     });
   });
+
+  $('.change-quarter').change(function (e) {
+    e.preventDefault();
+    let checkCounter = $('.change-quarter:checked').length;
+    let active = $(this).is(':checked');
+    let quarter = $(this).attr('id');
+
+    $.ajax({
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      },
+      type: 'POST',
+      url: '/admin/changeQuarter/',
+      data: {
+        quarter: quarter,
+        active: active,
+        checkCounter: checkCounter
+      },
+      success: function (result) {
+        if (result.success === 'true') {
+          swal({
+            title: "Successfully turned on/off the Quarter!",
+            icon: "success",
+            button: "Okay",
+          })
+          .then(results => {
+            $('.modal').removeClass('is-active');
+            // location.reload();
+          });
+        } else {
+          swal({
+            title: "Sorry, you cannot select two quarters at the same time.",
+            icon: "error",
+            button: "Awww",
+          })
+          .then(results => {
+            $('.modal').removeClass('is-active');
+            $('.switch > #' + quarter).prop('checked', false);
+          });
+        }
+      },
+      error: function (result) {
+        swal("Ooops!", "Sorry, something went wrong", "error");
+      }
+    });
+  });
+
 });

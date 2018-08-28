@@ -50,6 +50,7 @@ class User extends Authenticatable
                         ->where('category', 1)
                         ->orWhere('category', 2)
                         ->orWhere('category', 3)
+                        ->where('nominee', '!=', '')
                         ->groupBy('category')
                         ->get();
         return count($nominations) === 3;

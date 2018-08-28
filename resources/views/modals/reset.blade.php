@@ -3,7 +3,7 @@
   <div class="modal-card">
     <header class="modal-card-head">
       <p class="modal-card-title">
-        {{ auth()->user()->name }}, do you want to reset all votes?
+        {{ auth()->user()->first_name }}, do you want to reset all votes?
       </p>
       <button class="delete" aria-label="close" onclick="var el = document.getElementById('modal-settings-reset');
       el.className = 'modal'"></button>

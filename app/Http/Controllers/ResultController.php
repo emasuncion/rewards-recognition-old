@@ -5,8 +5,11 @@ namespace App\Http\Controllers;
 use App\Vote;
 use App\User;
 use App\Nominations;
+use App\Explanations;
+use App\Quarter;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class ResultController extends Controller
 {
@@ -18,11 +21,31 @@ class ResultController extends Controller
     public function index()
     {
         $users = User::all();
-        $valueCreatorNominations = Nominations::all()->where('category', 1);
-        $peopleDeveloperNominations = Nominations::all()->where('category', 2);
-        $businessOperatorNominations = Nominations::all()->where('category', 3);
+        $quarter = Quarter::where('active', 1)->pluck('id')->first();
+        $valueCreatorNominations = Nominations::select(\DB::raw('id, nominee, count(nominee) as vote'))
+                                ->where('category', 1)
+                                ->where('quarter', $quarter)
+                                ->orderBy('vote', 'desc')
+                                ->groupBy('nominee')
+                                ->get();
+        $peopleDeveloperNominations = Nominations::select(\DB::raw('id, nominee, count(nominee) as vote'))
+                                ->where('category', 2)
+                                ->where('quarter', $quarter)
+                                ->orderBy('vote', 'desc')
+                                ->groupBy('nominee')
+                                ->get();
+        $businessOperatorNominations = Nominations::select(\DB::raw('id, nominee, count(nominee) as vote'))
+                                ->where('category', 3)
+                                ->where('quarter', $quarter)
+                                ->orderBy('vote', 'desc')
+                                ->groupBy('nominee')
+                                ->get();
 
-        return view('result', compact('users', 'valueCreatorNominations', 'peopleDeveloperNominations', 'businessOperatorNominations'));
+        $valueCreatorExplanations = Explanations::all()->where('category', 1);
+        $peopleDeveloperExplanations = Explanations::all()->where('category', 2);
+        $businessOperatorExplanations = Explanations::all()->where('category', 3);
+
+        return view('result', compact('users', 'valueCreatorNominations', 'peopleDeveloperNominations', 'businessOperatorNominations', 'valueCreatorExplanations', 'peopleDeveloperExplanations', 'businessOperatorExplanations'));
     }
 
     public function submitted()

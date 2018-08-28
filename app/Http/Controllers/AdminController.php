@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Nominate;
 use App\User;
 use App\Employee;
+use App\Quarter;
 
 class AdminController extends Controller
 {
@@ -33,23 +34,8 @@ class AdminController extends Controller
         $users = User::where('active', 1)
                     ->orderBy('first_name', 'asc')
                     ->paginate(5);
-        return view('settings', compact('users'));
-    }
-
-    public function turnOn(Request $request)
-    {
-        $nomination = Nominate::where('isvotingOpen', 0)->update(['isvotingOpen' => $request->isvotingOpen]);
-        return response()->json([
-            'success' => 'true'
-        ]);
-    }
-
-    public function turnOff(Request $request)
-    {
-        $nomination = Nominate::where('isvotingOpen', 1)->update(['isvotingOpen' => $request->isvotingOpen]);
-        return response()->json([
-            'success' => 'true'
-        ]);
+        $quarter = Quarter::all();
+        return view('settings', compact('users', 'quarter'));
     }
 
     public function reset(Request $request)
@@ -62,8 +48,8 @@ class AdminController extends Controller
 
     public function changeRole(Request $request)
     {
-        $isAdmin = $request->isAdmin === 'true' ? 'admin' : 'default';
-        User::where('name', $request->employee)->update(['type' => $isAdmin]);
+        $isAdmin = $request->isAdmin === 'true' ? 1 : 2;
+        User::where('id', (integer)$request->userId)->update(['type' => $isAdmin]);
         return response()->json([
             'success' => 'true'
         ]);
@@ -72,17 +58,37 @@ class AdminController extends Controller
     public function addMember(Request $request)
     {
          $this->validate($request, [
-            'name' => 'required|string|max:255',
+            'firstName' => 'required|string|max:32',
+            'lastName' => 'required|string|max:32',
+            'username' => 'required|string|max:32',
             'email' => 'required|string|email|indisposable|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
+            // 'password' => 'required|string|min:6|confirmed|regex:/^(?=.*[a-zA-Z])(?=.*\d).+$/',
         ]);
 
         User::create([
-            'name' => $request['name'],
+            'first_name' => $request['firstName'],
+            'last_name' => $request['lastName'],
+            'username' => $request['username'],
             'email' => $request['email'],
             'password' => Hash::make($request['password']),
-            'type' => User::DEFAULT_TYPE,
+            'type' => User::NOMINEE,
         ]);
         return redirect()->back();
+    }
+
+    public function changeQuarter(Request $request)
+    {
+        if ($request->checkCounter > 1) {
+            return response()->json([
+                'success' => 'false'
+            ]);
+        }
+        $active = $request->active === 'true' ? 1 : 0;
+        $quarter = Quarter::find($request->quarter)
+                    ->update(['active' => $active]);
+        return response()->json([
+            'success' => 'true'
+        ]);
     }
 }

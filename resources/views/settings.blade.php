@@ -1,16 +1,26 @@
 @extends('admin.settings')
 
 @section('settings-voting')
-  @php
-    $value = auth()->user()->votingOpen() ? 'open': 'closed';
-  @endphp
-  <span class="voting-status-text">Voting is currently {{ $value }}</span>
-  <a class="button is-success is-rounded" href="/" onclick="event.preventDefault();
-    var el = document.getElementById('modal-settings-vote');
-    el.className += ' is-active'">
-    Change
-  </a>
-  @include('modals.voting')
+  <table>
+    <tr>
+      <td><h6>Quarter</h6></td>
+      <td><h6>Active</h6></td>
+    </tr>
+    @foreach($quarter as $item)
+      <tr>
+        <td>{{ $item->id }}</td>
+        @php
+        $checked = $item->active === 1 ? 'checked' : '';
+        @endphp
+        <td>
+          <label class="switch">
+            <input id="{{ $item->id }}" class="change-quarter" type="checkbox" {{ $checked }}>
+            <span class="slider round"></span>
+          </label>
+        </td>
+      </tr>
+    @endforeach
+  </table>
 @endsection
 
 @section('settings-reset-voters')
@@ -31,17 +41,17 @@
     </tr>
     @foreach($users as $user)
     <tr>
-      <td>{{ $user->first_name . ' ' . $user->last_name }}</td>
+      <td id="{{ $user->id }}">{{ $user->first_name . ' ' . $user->last_name }}</td>
       @php
         $checked = $user->type === 1 ? 'checked' : '';
       @endphp
       <td>
         <label class="switch">
-          <input class="admin-checkbox" type="checkbox" {{ $checked }}>
+          <input class="change-role" type="checkbox" {{ $checked }}>
           <span class="slider round"></span>
         </label>
       </td>
-      <td class="admin-delete-td">
+      <td class="admin-delete-user">
         <i class="far fa-trash-alt admin-delete-icon"></i>
       </td>
     </tr>
@@ -61,7 +71,7 @@
                 <label for="firstName" class="col-md-2 col-form-label">{{ __('First name') }}</label>
 
                 <div class="col-md-6">
-                    <input id="firstName" type="text" class="form-control{{ $errors->has('firstName') ? ' is-invalid' : '' }}" name="firstName" value="{{ old('firstName') }}" required autofocus>
+                    <input id="firstName" type="text" class="form-control{{ $errors->has('firstName') ? ' is-invalid' : '' }}" name="firstName" value="{{ old('firstName') }}" required>
 
                     @if ($errors->has('name'))
                         <span class="invalid-feedback" role="alert">
@@ -75,7 +85,7 @@
                 <label for="lastName" class="col-md-2 col-form-label">{{ __('Last name') }}</label>
 
                 <div class="col-md-6">
-                    <input id="lastName" type="text" class="form-control{{ $errors->has('lastName') ? ' is-invalid' : '' }}" name="lastName" value="{{ old('lastName') }}" required autofocus>
+                    <input id="lastName" type="text" class="form-control{{ $errors->has('lastName') ? ' is-invalid' : '' }}" name="lastName" value="{{ old('lastName') }}" required>
 
                     @if ($errors->has('lastName'))
                         <span class="invalid-feedback" role="alert">
@@ -89,7 +99,7 @@
                 <label for="username" class="col-md-2 col-form-label">{{ __('Username') }}</label>
 
                 <div class="col-md-6">
-                    <input id="username" type="text" class="form-control{{ $errors->has('username') ? ' is-invalid' : '' }}" name="username" value="{{ old('username') }}" required autofocus>
+                    <input id="username" type="text" class="form-control{{ $errors->has('username') ? ' is-invalid' : '' }}" name="username" value="{{ old('username') }}" required>
 
                     @if ($errors->has('username'))
                         <span class="invalid-feedback" role="alert">

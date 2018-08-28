@@ -11,9 +11,15 @@
               Value Creator
             </p>
           </header>
-          <div class="card-content">
-            @include('layouts.voteBody', ['users' => $users, 'position' => 'Value Creator', 'shorthand' => 'value_creator'])
-          </div>
+          @if($doneValueCreator)
+            <div class="card-content">
+              @include('layouts.voteBody', ['users' => $users, 'position' => 'Value Creator', 'shorthand' => 'value_creator'])
+            </div>
+          @else
+            <div class="card-content">
+              <p>You already voted for Value Creator.</p>
+            </div>
+          @endif
         </div>
 
         <div class="col-md-4 card vote-people-developer-card">
@@ -22,9 +28,15 @@
               People Developer
             </p>
           </header>
-          <div class="card-content">
-            @include('layouts.voteBody', ['users' => $users, 'position' => 'People Developer', 'shorthand' => 'people_developer'])
-          </div>
+          @if($donePeopleDeveloper)
+            <div class="card-content">
+              @include('layouts.voteBody', ['users' => $users, 'position' => 'People Developer', 'shorthand' => 'people_developer'])
+            </div>
+          @else
+            <div class="card-content">
+              <p>You already voted for People Developer.</p>
+            </div>
+          @endif
         </div>
 
         <div class="col-md-4 card vote-business-opeartor-card">
@@ -33,9 +45,15 @@
               Business Operator
             </p>
           </header>
-          <div class="card-content">
-            @include('layouts.voteBody', ['users' => $users, 'position' => 'Business Operator', 'shorthand' => 'business_operator'])
-          </div>
+          @if($doneBusinessOperator)
+            <div class="card-content">
+              @include('layouts.voteBody', ['users' => $users, 'position' => 'Business Operator', 'shorthand' => 'business_operator'])
+            </div>
+          @else
+            <div class="card-content">
+              <p>You already voted for Business Operator.</p>
+            </div>
+          @endif
         </div>
 
         @if (count($errors) > 0)

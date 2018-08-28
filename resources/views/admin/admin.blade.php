@@ -6,7 +6,7 @@
       <div class="col-md-10 admin-welcome-box">
         <article class="message is-info justify-content-center">
           <div class="message-header">
-            <p>Welcome {{ Auth::user()->name }}</p>
+            <p>Welcome {{ Auth::user()->first_name }}</p>
           </div>
 
           @yield('admin-body')

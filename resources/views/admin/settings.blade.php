@@ -19,7 +19,7 @@
       </div>
 
       <div class="col">
-        <div class="card">
+        <div class="card h-100">
           <header class="card-header">
             <p class="card-header-title is-centered">
               Reset Votes
@@ -50,7 +50,7 @@
       </div>
 
       <div class="col-md-6">
-        <div class="card">
+        <div class="card h-100">
           <header class="card-header">
             <p class="card-header-title is-centered">
               Add a member/account

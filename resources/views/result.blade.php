@@ -11,9 +11,9 @@
           <div class="collapse" id="vc{{ $shortName }}">
             <div class="card card-body">
               <ul>
-                @foreach($valueCreatorNominations as $vce)
-                  @if($vce->nominee === $vcVote->nominee)
-                    <li>{{ $vce->explanation }}</li>
+                @foreach($valueCreatorExplanations as $vcEx)
+                  @if($vcEx->nomination_id === $vcVote->id)
+                    <li>{{ $vcEx->explanation }}</li>
                   @endif
                 @endforeach
               </ul>
