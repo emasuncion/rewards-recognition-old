@@ -54,7 +54,7 @@ class NominationController extends Controller
                         ->orWhere('category', 3);
                     })
                     ->groupBy('users.id')
-                    ->havingRaw('count(users.id) > 1')
+                    ->havingRaw('count(users.id) = 3')
                     ->get(['users.*']);
         $notVoted = User::select('*')
                     ->leftJoin('nominations', 'nominations.user_id', '=', 'users.id')
@@ -148,7 +148,12 @@ class NominationController extends Controller
         $valueCreatorExplanations = Explanations::all();
         $peopleDeveloperExplanations = Explanations::all();
         $businessOperatorExplanations = Explanations::all();
-        return view('vote', compact('users', 'valueCreatorNominations', 'peopleDeveloperNominations', 'businessOperatorNominations', 'valueCreatorExplanations', 'peopleDeveloperExplanations', 'businessOperatorExplanations'));
+
+        $doneValueCreator = $this->voteDoneValueCreator();
+        $donePeopleDeveloper = $this->voteDonePeopleDeveloper();
+        $doneBusinessOperator = $this->voteDoneBusinessOperator();
+
+        return view('vote', compact('users', 'valueCreatorNominations', 'peopleDeveloperNominations', 'businessOperatorNominations', 'valueCreatorExplanations', 'peopleDeveloperExplanations', 'businessOperatorExplanations', 'doneValueCreator', 'donePeopleDeveloper', 'doneBusinessOperator'));
     }
 
     public function addVote(Request $request)
@@ -194,5 +199,26 @@ class NominationController extends Controller
                         ->groupBy('category')
                         ->get();
         return count($nominations) === 3;
+    }
+
+    public function voteDoneValueCreator()
+    {
+        return Nominations::where('user_id', auth()->user()->id)
+                    ->where('category', 1)
+                    ->get();
+    }
+
+    public function voteDonePeopleDeveloper()
+    {
+        return Nominations::where('user_id', auth()->user()->id)
+                    ->where('category', 2)
+                    ->get();
+    }
+
+    public function voteDoneBusinessOperator()
+    {
+        return Nominations::where('user_id', auth()->user()->id)
+                    ->where('category', 3)
+                    ->get();
     }
 }

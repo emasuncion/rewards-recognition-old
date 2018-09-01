@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use App\AwardForward;
 
 class HomeController extends Controller
 {
@@ -65,5 +66,32 @@ class HomeController extends Controller
 
         return redirect()->back()->with("success","Password changed successfully !");
 
+    }
+
+    /**
+     * Show the Award it forward page
+     * @return \Illuminate\Http\Response
+     */
+    public function awardForward()
+    {
+        $nominees = AwardForward::paginate(8);
+        return view('awardForward', compact('nominees'));
+    }
+
+    /**
+     * Inserts new nominee to the award_forward table
+     * @param Request $request
+     * @return \Illuminate\Http\Request
+     */
+    public function awardForwardAdd(Request $request)
+    {
+        $award = new AwardForward;
+        $award->user_id = auth()->user()->id;
+        $award->nominee = $request->nominee;
+        $award->description = $request->description;
+        $award->save();
+        return response()->json([
+            'success' => 'true'
+        ]);
     }
 }

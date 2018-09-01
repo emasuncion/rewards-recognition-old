@@ -24,11 +24,22 @@
 @endsection
 
 @section('settings-reset-voters')
-  <a class="button is-danger is-rounded" href="/" onclick="event.preventDefault();
-    var el = document.getElementById('modal-settings-reset');
-    el.className += ' is-active'">
-    Reset all votes
-  </a>
+  <table>
+    <tr>
+      <td class="admin-options">
+        <button disabled type="button" class="btn btn-warning admin-tie-breaker">Tie Breaker</button>
+      </td>
+      <td class="admin-options">
+        <button disabled type="button" class="btn btn-success admin-export">Export winners to excel file</button>
+      </td>
+    </tr>
+    <tr>
+      <td class="admin-options">
+        <button disabled type="button" class="btn btn-info">Email notification</button>
+      </td>
+      <td class="admin-options"></td>
+    </tr>
+  </table>
   @include('modals.reset')
 @endsection
 

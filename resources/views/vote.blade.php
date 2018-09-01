@@ -7,7 +7,7 @@
       $shortName = preg_replace('/ /', '', $vcVote->nominee);
     @endphp
       <tr class="nominees">
-        <td data-toggle="collapse" href="#vc{{ $shortName }}" role="button" aria-expanded="false" aria-controls="vc{{ $shortName }}"><i class="fas fa-caret-down"></i><i class="fas fa-caret-up" style="display: none;"></i> {{ $vcVote->nominee }}
+        <td data-id="{{ $vcVote->nominee }}" data-toggle="collapse" href="#vc{{ $shortName }}" role="button" aria-expanded="false" aria-controls="vc{{ $shortName }}"><i class="fas fa-caret-down"></i><i class="fas fa-caret-up" style="display: none;"></i> {{ $vcVote->nominee }}
           <div class="collapse" id="vc{{ $shortName }}">
             <div class="card card-body">
               <ul>
@@ -20,7 +20,9 @@
             </div>
         </td>
         <td>{{ $vcVote->vote }}</td>
-        <td><i class="fa fa-plus add-vote-vc"></i></td>
+        @if(count($doneValueCreator) < 1)
+          <td><i class="fa fa-plus add-vote-vc"></i></td>
+        @endif
       </tr>
     @endforeach
   </table>
@@ -46,7 +48,9 @@
             </div>
         </td>
         <td>{{ $pdVote->vote }}</td>
-        <td><i class="fa fa-plus add-vote-pd"></i></td>
+        @if(count($donePeopleDeveloper) < 1)
+          <td><i class="fa fa-plus add-vote-pd"></i></td>
+        @endif
       </tr>
       @endforeach
   </table>
@@ -72,9 +76,10 @@
             </div>
         </td>
         <td>{{ $boVote->vote }}</td>
-        <td><i class="fa fa-plus add-vote-bo"></i></td>
+        @if(count($doneBusinessOperator) < 1)
+          <td><i class="fa fa-plus add-vote-bo"></i></td>
+        @endif
       </tr>
       @endforeach
   </table>
 @endsection
-

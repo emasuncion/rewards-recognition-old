@@ -24,41 +24,11 @@ $(document).ready(function () {
     }
   });
 
-  // Reset the votes
-  $('#reset-votes').click(function (e) {
-    e.preventDefault();
-    $.ajax({
-      headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-      },
-      type: 'POST',
-      url: '/settings/reset/',
-      data: {
-        voted: 0
-      },
-      success: function (result) {
-        swal({
-          title: "Votes are now reset!",
-          text: "Users can vote again!",
-          icon: "success",
-          button: "Aww yiss!",
-        })
-        .then(results => {
-          $('.modal').removeClass('is-active');
-          location.reload();
-        });
-      },
-      error: function (result) {
-        swal("Ooops!", "Sorry, something went wrong", "error");
-      }
-    });
-  });
-
   // Add vote
   // Value Creator
   $('.add-vote-vc').click(function (e) {
     e.preventDefault();
-    var voted = $(this).parent().prev().prev().text();
+    var nominee = $(this).parent().prev().prev().attr('data-id');
     $.ajax({
       headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -66,7 +36,7 @@ $(document).ready(function () {
       type: 'POST',
       url: '/addVote/',
       data: {
-        nominee: voted,
+        nominee: nominee,
         position: 'value-creator'
       },
       success: function (result) {
@@ -92,7 +62,7 @@ $(document).ready(function () {
   // People Developer
   $('.add-vote-pd').click(function (e) {
     e.preventDefault();
-    var nominee = $(this).parent().prev().prev().text();
+    var nominee = $(this).parent().prev().prev().attr('data-id');
     $.ajax({
       headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -126,7 +96,7 @@ $(document).ready(function () {
 // Business Operator
   $('.add-vote-bo').click(function (e) {
     e.preventDefault();
-    var nominee = $(this).parent().prev().prev().text();
+    var nominee = $(this).parent().prev().prev().attr('data-id');
     $.ajax({
       headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -236,4 +206,64 @@ $(document).ready(function () {
     });
   });
 
+  $('.admin-delete-icon').click(function (e) {
+    e.preventDefault();
+    $this = $(this);
+    let id = $this.parent().prev().prev().prev().attr('id');
+    let user = $this.parent().prev().prev().prev().text();
+
+    swal({
+      title: 'Are you sure?',
+      text: user + ' will be permanently deleted in our record.',
+      icon: 'warning',
+      buttons: {
+        cancel: 'No, don\'t delete!',
+        submit: {
+          text: 'Yes please!',
+          value: 'delete',
+        }
+      },
+    })
+    .then((value) => {
+      switch (value) {
+        case 'delete':
+          $.ajax({
+            headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type: 'POST',
+            url: '/admin/deleteUser/',
+            data: {
+              userId: id
+            },
+            success: function (result) {
+              swal({
+                title: "Awwwww!",
+                text: user + ' successfully deleted in our records.',
+                icon: "success",
+                button: "Okay",
+              })
+              .then(results => {
+                $('.modal').removeClass('is-active');
+                location.reload();
+              });
+            },
+            error: function (result) {
+              swal("Ooops!", "Sorry, something went wrong deleting user", "error");
+            }
+          });
+          break;
+        default:
+          swal('Oh yiiis!', user + ' is not deleted!', 'success');
+      }
+    });
+  });
+
+  // Award forward add
+  $('.award-forward-add').click(function(e) {
+    e.preventDefault();
+    let name = '';
+    let description = '';
+    swal('Coming soon', 'This feature is on it\'s way', 'info');
+  });
 });

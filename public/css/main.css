@@ -166,3 +166,8 @@ td.admin-delete-user {
 ul.pagination {
   list-style: none !important;
 }
+
+td.admin-options {
+  text-align: center;
+  line-height: 5em;
+}

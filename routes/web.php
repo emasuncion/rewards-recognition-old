@@ -25,6 +25,7 @@ Route::get('admin', 'AdminController@index')
     ->middleware('is_admin')
     ->name('admin');
 Route::get('nominate', 'NominationController@index')
+    ->middleware('voted')
     ->name('nominate');
 Route::get('vote', 'NominationController@vote')
     ->middleware('voted')
@@ -42,6 +43,8 @@ Route::get('results/partial', 'ResultController@index')
 Route::get('settings', 'AdminController@settings')
     ->middleware('is_admin')
     ->name('settings');
+Route::get('awardForward', 'HomeController@awardForward')
+    ->name('awardForward');
 
 // POST Routes
 Route::post('changePassword','HomeController@changePassword')
@@ -50,10 +53,11 @@ Route::post('addVote', 'NominationController@addVote');
 Route::post('nominate', 'NominationController@submitVote');
 Route::post('admin/changeRole', 'AdminController@changeRole')
     ->middleware('is_admin');
-Route::post('settings/reset', 'AdminController@reset')
-    ->middleware('is_admin');
 Route::post('addMember', 'AdminController@addMember');
 Route::post('admin/changeQuarter', 'AdminController@changeQuarter')
     ->middleware('is_admin');
 Route::post('admin/changeGuest', 'AdminController@changeGuest')
     ->middleware('is_admin');
+Route::post('admin/deleteUser', 'AdminController@deleteUser')
+    ->middleware('is_admin');
+Route::post('awardForward/add', 'HomeController@awardForwardAdd');

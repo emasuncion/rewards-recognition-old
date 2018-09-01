@@ -38,16 +38,9 @@ class AdminController extends Controller
         return view('settings', compact('users', 'quarter'));
     }
 
-    public function reset(Request $request)
-    {
-        $reset = Employee::where('voted', 1)->update(['voted' => 0]);
-        return response()->json([
-            'success' => 'true'
-        ]);
-    }
-
     public function changeRole(Request $request)
     {
+        // Fallback user type is 2
         $isAdmin = $request->isAdmin === 'true' ? 1 : 2;
         User::where('id', (integer) $request->userId)->update(['type' => $isAdmin]);
         return response()->json([
@@ -85,6 +78,12 @@ class AdminController extends Controller
             'type' => User::NOMINEE,
         ]);
         return redirect()->back();
+    }
+
+    public function deleteUser(Request $request)
+    {
+        $user = User::find($request->userId);
+        $user->delete();
     }
 
     public function changeQuarter(Request $request)
