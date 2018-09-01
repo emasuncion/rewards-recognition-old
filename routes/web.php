@@ -55,3 +55,5 @@ Route::post('settings/reset', 'AdminController@reset')
 Route::post('addMember', 'AdminController@addMember');
 Route::post('admin/changeQuarter', 'AdminController@changeQuarter')
     ->middleware('is_admin');
+Route::post('admin/changeGuest', 'AdminController@changeGuest')
+    ->middleware('is_admin');

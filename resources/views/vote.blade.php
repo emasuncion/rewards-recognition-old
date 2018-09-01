@@ -20,6 +20,7 @@
             </div>
         </td>
         <td>{{ $vcVote->vote }}</td>
+        <td><i class="fa fa-plus add-vote-vc"></i></td>
       </tr>
     @endforeach
   </table>
@@ -45,6 +46,7 @@
             </div>
         </td>
         <td>{{ $pdVote->vote }}</td>
+        <td><i class="fa fa-plus add-vote-pd"></i></td>
       </tr>
       @endforeach
   </table>
@@ -70,6 +72,7 @@
             </div>
         </td>
         <td>{{ $boVote->vote }}</td>
+        <td><i class="fa fa-plus add-vote-bo"></i></td>
       </tr>
       @endforeach
   </table>

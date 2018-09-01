@@ -47,9 +47,11 @@ class User extends Authenticatable
     public function voted()
     {
         $nominations = Nominations::select('category')->where('user_id', auth()->user()->id)
-                        ->where('category', 1)
-                        ->orWhere('category', 2)
-                        ->orWhere('category', 3)
+                        ->where(function ($query) {
+                            $query->where('category', 1)
+                                ->orWhere('category', 2)
+                                ->orWhere('category', 3);
+                        })
                         ->where('nominee', '!=', '')
                         ->groupBy('category')
                         ->get();

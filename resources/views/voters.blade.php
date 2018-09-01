@@ -3,14 +3,14 @@
 @section('already-voted-body')
   <div class="col-md-12">
     <p class="welcome-message">
-      @if(isset($voted))
+      @if(count($voted) > 0)
         @foreach($voted as $v)
           <ul>
             <li>{{  $v->first_name }}</li>
           </ul>
         @endforeach
       @else
-        <p>No users voted.</p>
+        <p>Aww, it seems that no one has voted yet.</p>
       @endif
     </p>
   </div>
@@ -19,11 +19,15 @@
 @section('not-yet-voted-body')
   <div class="col-md-12">
     <p class="welcome-message">
-      @foreach($notVoted as $v)
-        <ul>
-          <li>{{  $v->first_name }}</li>
-        </ul>
-      @endforeach
+      @if(count($notVoted) > 0)
+        @foreach($notVoted as $v)
+          <ul>
+            <li>{{  $v->first_name }}</li>
+          </ul>
+        @endforeach
+      @else
+        <p>Hooorah! Everybody in the team already voted.</p>
+      @endif
     </p>
   </div>
 @endsection

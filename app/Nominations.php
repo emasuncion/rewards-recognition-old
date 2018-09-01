@@ -21,4 +21,8 @@ class Nominations extends Model
     {
         return $this->belongsTo('App\User');
     }
+
+    public function explanation() {
+        return $this->belongsTo('App\Explanations');
+    }
 }

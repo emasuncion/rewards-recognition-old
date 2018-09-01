@@ -32,10 +32,10 @@
                     @endphp
                     @if(auth()->user()->isAdmin() && !auth()->user()->voted() && auth()->user()->votingOpen() && (in_array(Route::current()->getName(), $routes)))
                         <li class="nav-item">
-                            <a class="nav-link heading2" href="/vote">Vote</a>
+                            <a class="nav-link heading2" href="/nominate">Nominate</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link heading2" href="/nominate">Nominate</a>
+                            <a class="nav-link heading2" href="/vote">Vote</a>
                         </li>
                     @endif
                     <li class="nav-item dropdown">

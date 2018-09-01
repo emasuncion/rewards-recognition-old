@@ -49,7 +49,17 @@ class AdminController extends Controller
     public function changeRole(Request $request)
     {
         $isAdmin = $request->isAdmin === 'true' ? 1 : 2;
-        User::where('id', (integer)$request->userId)->update(['type' => $isAdmin]);
+        User::where('id', (integer) $request->userId)->update(['type' => $isAdmin]);
+        return response()->json([
+            'success' => 'true'
+        ]);
+    }
+
+    public function changeGuest(Request $request)
+    {
+        // Fallback user type is 2
+        $isGuest = $request->active === 'true' ? 3 : 2;
+        User::where('id', (integer) $request->userId)->update(['type' => $isGuest]);
         return response()->json([
             'success' => 'true'
         ]);

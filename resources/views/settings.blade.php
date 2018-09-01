@@ -37,17 +37,25 @@
     <tr>
         <td><h6>Active Member/s</h6></td>
         <td><h6>Admin</h6></td>
+        <td><h6>Guest</h6></td>
         <td style="text-align: center;"><h6>Delete</h6></td>
     </tr>
     @foreach($users as $user)
     <tr>
       <td id="{{ $user->id }}">{{ $user->first_name . ' ' . $user->last_name }}</td>
       @php
-        $checked = $user->type === 1 ? 'checked' : '';
+        $checkedRole = $user->type === 1 ? 'checked' : '';
+        $checkedGuest = $user->type === 3 ? 'checked' : '';
       @endphp
       <td>
         <label class="switch">
-          <input class="change-role" type="checkbox" {{ $checked }}>
+          <input class="change-role" type="checkbox" {{ $checkedRole }}>
+          <span class="slider round"></span>
+        </label>
+      </td>
+      <td>
+        <label class="switch">
+          <input class="change-guest" type="checkbox" {{ $checkedGuest }}>
           <span class="slider round"></span>
         </label>
       </td>

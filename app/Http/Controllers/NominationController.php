@@ -46,16 +46,26 @@ class NominationController extends Controller
 
     public function viewVoters()
     {
-        $voted = User::with('nominations')
-                    ->join('nominations', 'nominations.user_id', '=', 'users.id')
-                    ->where('category', 1)
-                    ->orWhere('category', 2)
-                    ->orWhere('category', 3)
+        $voted = User::select('*')
+                    ->leftJoin('nominations', 'nominations.user_id', '=', 'users.id')
+                    ->where(function ($query) {
+                        $query->where('category', 1)
+                        ->orWhere('category', 2)
+                        ->orWhere('category', 3);
+                    })
                     ->groupBy('users.id')
+                    ->havingRaw('count(users.id) > 1')
                     ->get(['users.*']);
         $notVoted = User::select('*')
                     ->leftJoin('nominations', 'nominations.user_id', '=', 'users.id')
-                    ->whereRaw('nominations.user_id is null')
+                    ->whereNull('nominations.user_id')
+                    ->orWhere(function ($query) {
+                        $query->where('category', 1)
+                        ->orWhere('category', 2)
+                        ->orWhere('category', 3);
+                    })
+                    ->groupBy('users.id')
+                    ->havingRaw('count(users.id) != 3')
                     ->get();
         return view('voters', compact('voted', 'notVoted'));
     }
@@ -63,35 +73,48 @@ class NominationController extends Controller
     public function submitVote(Request $request)
     {
         $quarter = Quarter::where('active', 1)->pluck('id')->first();
-        Nominations::insert([
-            [
+        if ($request->nominee_value_creator) {
+            $nominee = Nominations::create([
                 'user_id' => auth()->user()->id,
                 'nominee' => $request->nominee_value_creator,
                 'category' => 1,
-                'explanation' => $request->explanation_value_creator,
-                'quarter' => $quarter,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
-            ],
-            [
+                'quarter' => $quarter
+            ])->id;
+            Explanations::create([
+                'nomination_id' => $nominee,
+                'explanation' => $request->explanation_value_creator
+            ]);
+        }
+
+        if ($request->nominee_people_developer) {
+            $nominee = Nominations::create([
                 'user_id' => auth()->user()->id,
                 'nominee' => $request->nominee_people_developer,
                 'category' => 2,
-                'explanation' => $request->explanation_people_developer,
                 'quarter' => $quarter,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
-            ],
-            [
+            ])->id;
+            Explanations::create([
+                'nomination_id' => $nominee,
+                'explanation' => $request->explanation_people_developer
+            ]);
+        }
+
+        if ($request->nominee_business_operator) {
+            $nominee = Nominations::create([
                 'user_id' => auth()->user()->id,
                 'nominee' => $request->nominee_business_operator,
                 'category' => 3,
-                'explanation' => $request->explanation_business_operator,
                 'quarter' => $quarter,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
-            ]
-        ]);
+            ])->id;
+            Explanations::create([
+                'nomination_id' => $nominee,
+                'explanation' => $request->explanation_business_operator
+            ]);
+        }
 
         if (auth()->user()->isAdmin()) {
             return redirect('admin');
@@ -130,28 +153,33 @@ class NominationController extends Controller
 
     public function addVote(Request $request)
     {
-        $vote = new Nominations;
+        $nominations = new Nominations;
+        $quarter = Quarter::where('active', 1)->pluck('id')->first();
         switch($request->position) {
             case 'value-creator':
-                $vote->nominee_value_creator = $request->nominee;
-                $vote->explanation_value_creator = $request->data;
-                $vote->save();
+                $nominations->user_id = auth()->user()->id;
+                $nominations->nominee = $request->nominee;
+                $nominations->category = 1;
+                $nominations->quarter = $quarter;
+                $nominations->save();
                 break;
             case 'people-developer':
-                $vote->nominee_people_developer = $request->nominee;
-                $vote->explanation_people_developer = $request->data;
-                $vote->save();
+            $nominations->user_id = auth()->user()->id;
+                $nominations->nominee = $request->nominee;
+                $nominations->category = 2;
+                $nominations->quarter = $quarter;
+                $nominations->save();
                 break;
             case 'business-operator':
-                $vote->nominee_business_operator = $request->nominee;
-                $vote->explanation_business_operator = $request->data;
-                $vote->save();
+                $nominations->user_id = auth()->user()->id;
+                $nominations->nominee = $request->nominee;
+                $nominations->category = 3;
+                $nominations->quarter = $quarter;
+                $nominations->save();
                 break;
             default:
                 break;
         }
-        Employee::where('name', auth()->user()->name)
-            ->update(['voted' => 1]);
         return response()->json([
             'success' => 'true'
         ]);

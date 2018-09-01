@@ -4,7 +4,7 @@
   <div class="container">
     <div class="row mb-4">
       <div class="col">
-        <div class="card">
+        <div class="card h-100">
           <header class="card-header">
             <p class="card-header-title is-centered">
               Voting
@@ -22,7 +22,7 @@
         <div class="card h-100">
           <header class="card-header">
             <p class="card-header-title is-centered">
-              Reset Votes
+              Admin options
             </p>
           </header>
           <div class="card-content">
@@ -35,10 +35,10 @@
     </div> <!-- End of row -->
     <div class="row justify-content-center mb-4">
       <div class="col-md-6">
-        <div class="card">
+        <div class="card h-100">
           <header class="card-header">
             <p class="card-header-title is-centered">
-              Manage User Profiles (no delete yet)
+              Manage User Profiles
             </p>
           </header>
           <div class="card-content">
@@ -53,7 +53,7 @@
         <div class="card h-100">
           <header class="card-header">
             <p class="card-header-title is-centered">
-              Add a member/account
+              Add a new account
             </p>
           </header>
           <div class="card-content">
