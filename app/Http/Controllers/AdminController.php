@@ -9,6 +9,7 @@ use App\Nominate;
 use App\User;
 use App\Employee;
 use App\Quarter;
+use App\Voting;
 
 class AdminController extends Controller
 {
@@ -35,7 +36,8 @@ class AdminController extends Controller
                     ->orderBy('first_name', 'asc')
                     ->paginate(5);
         $quarter = Quarter::all();
-        return view('settings', compact('users', 'quarter'));
+        $voting = Voting::first();
+        return view('settings', compact('users', 'quarter', 'voting'));
     }
 
     public function changeRole(Request $request)
@@ -96,6 +98,16 @@ class AdminController extends Controller
         $active = $request->active === 'true' ? 1 : 0;
         $quarter = Quarter::find($request->quarter)
                     ->update(['active' => $active]);
+        return response()->json([
+            'success' => 'true'
+        ]);
+    }
+
+    public function turnVote(Request $request)
+    {
+        $status = $request->id === "0" ? 1 : 0;
+        Voting::where('votingOpen', $request->id)
+            ->update(['votingOpen' => $status]);
         return response()->json([
             'success' => 'true'
         ]);

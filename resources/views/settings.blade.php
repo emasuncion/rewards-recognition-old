@@ -27,20 +27,24 @@
   <table>
     <tr>
       <td class="admin-options">
-        <button disabled type="button" class="btn btn-warning admin-tie-breaker">Tie Breaker</button>
+        <a disabled href="#" class="button is-warning admin-tie-breaker">Tie breaker</a>
       </td>
       <td class="admin-options">
-        <button disabled type="button" class="btn btn-success admin-export">Export winners to excel file</button>
+        @php
+          $stat = $voting->votingOpen === 0 ? 'on' : 'off';
+        @endphp
+        <a id="{{ $voting->votingOpen }}" href="/admin/turnVote" class="button is-success admin-voting">Turn {{ $stat }} voting</a>
       </td>
     </tr>
     <tr>
       <td class="admin-options">
-        <button disabled type="button" class="btn btn-info">Email notification</button>
+        <a disabled href="#" class="button is-info admin-email">Email notification</a>
       </td>
-      <td class="admin-options"></td>
+      <td class="admin-options">
+        <a disabled href="#" class="button is-success admin-export">Export winners to excel file</a>
+      </td>
     </tr>
   </table>
-  @include('modals.reset')
 @endsection
 
 @section('settings-manage-users')

@@ -90,8 +90,6 @@ class HomeController extends Controller
         $award->nominee = $request->nominee;
         $award->description = $request->description;
         $award->save();
-        return response()->json([
-            'success' => 'true'
-        ]);
+        return redirect()->back();
     }
 }

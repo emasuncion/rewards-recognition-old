@@ -61,3 +61,5 @@ Route::post('admin/changeGuest', 'AdminController@changeGuest')
 Route::post('admin/deleteUser', 'AdminController@deleteUser')
     ->middleware('is_admin');
 Route::post('awardForward/add', 'HomeController@awardForwardAdd');
+Route::post('admin/turnVote', 'AdminController@turnVote')
+    ->middleware('is_admin');

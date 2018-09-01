@@ -45,6 +45,9 @@
 
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                             @if(auth()->user()->isAdmin())
+                            <a class="dropdown-item" href="{{ route('awardForward') }}">
+                                {{ __('Award It Forward!') }}
+                            </a>
                             <a class="dropdown-item" href="{{ route('settings') }}">
                                 {{ __('Settings') }}
                             </a>

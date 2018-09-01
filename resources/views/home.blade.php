@@ -59,6 +59,7 @@
       </footer>
     </div>
 
+    @if(auth()->user()->quarterOpen())
     <div class="default-card-vote card vote-card col-md-5">
       <div class="card-header">
         <p class="title vote-title">
@@ -94,5 +95,6 @@
         </p>
       </footer>
     </div>
+    @endif
   </div>
 @endsection

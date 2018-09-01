@@ -25,4 +25,5 @@
       {{ $nominees->links() }}
     </div>
   </div>
+  @include('modals.awardForward')
 @endsection

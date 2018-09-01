@@ -169,5 +169,6 @@ ul.pagination {
 
 td.admin-options {
   text-align: center;
-  line-height: 5em;
+  padding-top: 3em !important;
+  padding-bottom: 3em !important;
 }

@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Employee;
 use App\Nominations;
 use App\Quarter;
+use App\Voting;
 
 class User extends Authenticatable
 {
@@ -59,6 +60,11 @@ class User extends Authenticatable
     }
 
     public function votingOpen()
+    {
+        return Voting::all()->where('votingOpen', 1)->first();
+    }
+
+    public function quarterOpen()
     {
         return Quarter::all()->where('active', 1)->first();
     }

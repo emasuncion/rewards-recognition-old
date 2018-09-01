@@ -3,12 +3,6 @@
  * @author Eleirold Asuncion <emasuncion.dev@gmail.com>
  */
 
-function checkIfDoneVoting() {
-  if ($('.add-vote-vc').is(':hidden') && $('.add-vote-pd').is(':hidden') && $('.add-vote-bo').is(':hidden')) {
-    return true;
-  }
-}
-
 $(document).ready(function () {
   $('tr.nominees > td').click(function(e) {
     e.preventDefault();
@@ -48,10 +42,7 @@ $(document).ready(function () {
         .then(results => {
           $('.modal').removeClass('is-active');
           $('.add-vote-vc').hide();
-          let done = checkIfDoneVoting();
-          if (done) {
-            window.location.href = '/admin';
-          }
+          window.location.reload();
         });
       },
       error: function (result) {
@@ -83,9 +74,7 @@ $(document).ready(function () {
           $('.modal').removeClass('is-active');
           $('.add-vote-pd').hide();
           let done = checkIfDoneVoting();
-          if (done) {
-            window.location.href = '/admin';
-          }
+          window.location.reload();
         });
       },
       error: function (result) {
@@ -116,10 +105,7 @@ $(document).ready(function () {
         .then(results => {
           $('.modal').removeClass('is-active');
           $('.add-vote-bo').hide();
-          let done = checkIfDoneVoting();
-          if (done) {
-            window.location.href = '/admin';
-          }
+          window.location.reload();
         });
       },
       error: function (result) {
@@ -259,11 +245,43 @@ $(document).ready(function () {
     });
   });
 
+  $('.admin-voting').click(function(e) {
+    e.preventDefault();
+    $this = $(this);
+    let id = $this.attr('id');
+    let stat = id === "0" ? 'on' : 'off';
+    $.ajax({
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      },
+      type: 'POST',
+      url: '/admin/turnVote',
+      data: {
+        id: id
+      },
+      success: function (result) {
+        swal({
+          title: "Successfully turned " + stat + " the voting!",
+          text: "Users can now start to vote.",
+          icon: "success",
+          button: "Yisss.",
+        })
+        .then(results => {
+          $('.modal').removeClass('is-active');
+          location.reload();
+        });
+      },
+      error: function (result) {
+        swal("Ooops!", "Sorry, something went wrong", "error");
+      }
+    });
+  });
+
   // Award forward add
   $('.award-forward-add').click(function(e) {
     e.preventDefault();
     let name = '';
     let description = '';
-    swal('Coming soon', 'This feature is on it\'s way', 'info');
+    // swal('Coming soon', 'This feature is on it\'s way', 'info');
   });
 });
