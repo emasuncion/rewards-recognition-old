@@ -280,8 +280,15 @@ $(document).ready(function () {
   // Award forward add
   $('.award-forward-add').click(function(e) {
     e.preventDefault();
-    let name = '';
-    let description = '';
-    // swal('Coming soon', 'This feature is on it\'s way', 'info');
+    $this = $(this);
+    $('#modal-award-forward').addClass('is-active');
   });
+
+  if ($('#modal-award-forward').hasClass('is-active')) {
+    $('.award-forward-add').click(function(e) {
+      e.preventDefault();
+      $this = $(this);
+      $('#modal-award-forward').removeClass('is-active');
+    });
+  }
 });
