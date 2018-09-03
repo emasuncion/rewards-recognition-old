@@ -21,19 +21,23 @@ class NominationController extends Controller
     public function index()
     {
         $users = User::all();
+        $quarter = Quarter::where('active', 1)->pluck('id')->first();
         $doneValueCreator = Nominations::where('user_id', auth()->user()->id)
                             ->where('category', 1)
+                            ->where('quarter', $quarter)
                             ->where('nominee', '!=', '')
                             ->first();
                             // dd(empty($doneValueCreator) );
         $doneValueCreator = empty($doneValueCreator) ? 1 : 0;
         $donePeopleDeveloper = Nominations::where('user_id', auth()->user()->id)
                             ->where('category', 2)
+                            ->where('quarter', $quarter)
                             ->where('nominee', '!=', '')
                             ->first();
         $donePeopleDeveloper = empty($donePeopleDeveloper) ? 1 : 0;
         $doneBusinessOperator = Nominations::where('user_id', auth()->user()->id)
                             ->where('category', 3)
+                            ->where('quarter', $quarter)
                             ->where('nominee', '!=', '')
                             ->first();
         $doneBusinessOperator = empty($doneBusinessOperator) ? 1 : 0;
@@ -203,22 +207,28 @@ class NominationController extends Controller
 
     public function voteDoneValueCreator()
     {
+        $quarter = Quarter::where('active', 1)->pluck('id')->first();
         return Nominations::where('user_id', auth()->user()->id)
                     ->where('category', 1)
+                    ->where('quarter', $quarter)
                     ->get();
     }
 
     public function voteDonePeopleDeveloper()
     {
+        $quarter = Quarter::where('active', 1)->pluck('id')->first();
         return Nominations::where('user_id', auth()->user()->id)
                     ->where('category', 2)
+                    ->where('quarter', $quarter)
                     ->get();
     }
 
     public function voteDoneBusinessOperator()
     {
+        $quarter = Quarter::where('active', 1)->pluck('id')->first();
         return Nominations::where('user_id', auth()->user()->id)
                     ->where('category', 3)
+                    ->where('quarter', $quarter)
                     ->get();
     }
 }
