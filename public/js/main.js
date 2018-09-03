@@ -73,7 +73,6 @@ $(document).ready(function () {
         .then(results => {
           $('.modal').removeClass('is-active');
           $('.add-vote-pd').hide();
-          let done = checkIfDoneVoting();
           window.location.reload();
         });
       },
@@ -151,6 +150,7 @@ $(document).ready(function () {
     let checkCounter = $('.change-quarter:checked').length;
     let active = $(this).is(':checked');
     let quarter = $(this).attr('id');
+    let status = active === true ? 'on' : 'off';
 
     $.ajax({
       headers: {
@@ -166,13 +166,13 @@ $(document).ready(function () {
       success: function (result) {
         if (result.success === 'true') {
           swal({
-            title: "Successfully turned on/off the Quarter!",
+            title: "Successfully turned " + status + " quarter " + quarter + "!",
             icon: "success",
             button: "Okay",
           })
           .then(results => {
             $('.modal').removeClass('is-active');
-            // location.reload();
+            window.location.reload();
           });
         } else {
           swal({

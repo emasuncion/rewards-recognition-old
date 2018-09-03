@@ -90,12 +90,14 @@ class AdminController extends Controller
 
     public function changeQuarter(Request $request)
     {
-        if ($request->checkCounter > 1) {
+        /*if ($request->checkCounter > 1) {
             return response()->json([
                 'success' => 'false'
             ]);
-        }
+        }*/
         $active = $request->active === 'true' ? 1 : 0;
+        Quarter::where('active', 1)
+                ->update(['active' => 0]);
         $quarter = Quarter::find($request->quarter)
                     ->update(['active' => $active]);
         return response()->json([

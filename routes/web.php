@@ -26,8 +26,10 @@ Route::get('admin', 'AdminController@index')
     ->name('admin');
 Route::get('nominate', 'NominationController@index')
     ->middleware('voted')
+    ->middleware('voting_open')
     ->name('nominate');
 Route::get('vote', 'NominationController@vote')
+    ->middleware('voting_open')
     ->middleware('voted')
     ->name('vote');
 Route::get('voters', 'NominationController@viewVoters')
