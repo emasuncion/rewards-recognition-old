@@ -27,7 +27,7 @@
   <table>
     <tr>
       <td class="admin-options">
-        <a disabled href="#" class="button is-warning admin-tie-breaker">Tie breaker</a>
+        <a href="/admin/tieBreaker" class="button is-warning admin-tie-breaker">Tie breaker</a>
       </td>
       <td class="admin-options">
         @php

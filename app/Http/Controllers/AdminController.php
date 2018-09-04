@@ -5,11 +5,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 use App\Nominate;
 use App\User;
 use App\Employee;
 use App\Quarter;
 use App\Voting;
+use App\Explanations;
 
 class AdminController extends Controller
 {
@@ -113,5 +115,24 @@ class AdminController extends Controller
         return response()->json([
             'success' => 'true'
         ]);
+    }
+
+    public function tieBreaker()
+    {
+        $valueCreatorTie = self::nomineeTieBreaker(1);
+        $peopleDeveloperTie = self::nomineeTieBreaker(2);
+        $businessOperatorTie = self::nomineeTieBreaker(3);
+        $valueCreatorExplanations = Explanations::all();
+        $peopleDeveloperExplanations = Explanations::all();
+        $businessOperatorExplanations = Explanations::all();
+
+        return view('tieBreaker', compact('valueCreatorTie', 'peopleDeveloperTie', 'businessOperatorTie', 'valueCreatorExplanations', 'peopleDeveloperExplanations', 'businessOperatorExplanations'));
+    }
+
+    private function nomineeTieBreaker(int $category)
+    {
+        $quarter = Quarter::where('active', 1)->pluck('id')->first();
+        $tieBreaker = DB::select('select id, nominee, count(*) as count from nominations where quarter = ? and YEAR(created_at) = ? and category = ? group by nominee having count = (select max(count) from (select count(*) as count from nominations where quarter = ? and year(created_at) = ? and category = ? group by nominee ) as count)', [$quarter, now()->year, $category, $quarter, now()->year, $category]);
+        return $tieBreaker;
     }
 }

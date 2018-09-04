@@ -47,6 +47,8 @@ Route::get('settings', 'AdminController@settings')
     ->name('settings');
 Route::get('awardForward', 'HomeController@awardForward')
     ->name('awardForward');
+Route::get('admin/tieBreaker', 'AdminController@tieBreaker')
+    ->middleware('is_admin');
 
 // POST Routes
 Route::post('changePassword','HomeController@changePassword')
