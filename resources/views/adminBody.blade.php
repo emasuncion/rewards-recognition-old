@@ -11,6 +11,6 @@
     </div>
 
     <div class="row justify-content-center">
-      @include('layouts.adminTools', ['tools' => ['Voters', 'Results', 'Graph']]);
+      @include('layouts.adminTools', ['tools' => ['Voters', 'Results', 'Graph']])
     </div>
 @endsection

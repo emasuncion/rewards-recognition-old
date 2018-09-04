@@ -26,8 +26,10 @@ Route::get('admin', 'AdminController@index')
     ->name('admin');
 Route::get('nominate', 'NominationController@index')
     ->middleware('voted')
+    ->middleware('voting_open')
     ->name('nominate');
 Route::get('vote', 'NominationController@vote')
+    ->middleware('voting_open')
     ->middleware('voted')
     ->name('vote');
 Route::get('voters', 'NominationController@viewVoters')
@@ -45,6 +47,8 @@ Route::get('settings', 'AdminController@settings')
     ->name('settings');
 Route::get('awardForward', 'HomeController@awardForward')
     ->name('awardForward');
+Route::get('admin/tieBreaker', 'AdminController@tieBreaker')
+    ->middleware('is_admin');
 
 // POST Routes
 Route::post('changePassword','HomeController@changePassword')

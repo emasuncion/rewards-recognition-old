@@ -15,13 +15,9 @@ class CreateAwardForwardTable extends Migration
     {
         Schema::create('award_forward', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id')->unsigned();
             $table->string('nominee')->notNullable();
             $table->text('description')->notNullable();
             $table->timestamps();
-            $table->foreign('user_id')
-                ->references('id')
-                ->on('users');
         });
     }
 

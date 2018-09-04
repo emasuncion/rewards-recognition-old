@@ -172,3 +172,7 @@ td.admin-options {
   padding-top: 3em !important;
   padding-bottom: 3em !important;
 }
+
+.award-forward-add-cursor {
+  cursor: pointer;
+}

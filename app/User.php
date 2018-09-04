@@ -47,6 +47,7 @@ class User extends Authenticatable
 
     public function voted()
     {
+        $quarter = Quarter::where('active', 1)->pluck('id')->first();
         $nominations = Nominations::select('category')->where('user_id', auth()->user()->id)
                         ->where(function ($query) {
                             $query->where('category', 1)
@@ -54,6 +55,7 @@ class User extends Authenticatable
                                 ->orWhere('category', 3);
                         })
                         ->where('nominee', '!=', '')
+                        ->where('quarter', $quarter)
                         ->groupBy('category')
                         ->get();
         return count($nominations) === 3;

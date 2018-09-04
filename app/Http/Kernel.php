@@ -61,5 +61,6 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'is_admin' => \App\Http\Middleware\IsAdmin::class,
         'voted' => \App\Http\Middleware\Voted::class,
+        'voting_open' => \App\Http\Middleware\IsVotingOpen::class,
     ];
 }

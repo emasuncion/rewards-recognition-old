@@ -5,7 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Laravel</title>
+        <title>Rewards & Recognition</title>
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
@@ -62,6 +62,13 @@
             .m-b-md {
                 margin-bottom: 30px;
             }
+
+            .cup-logo {
+              width: 500px;
+              position: absolute;
+              top: 30px;
+              left: 5em;
+            }
         </style>
     </head>
     <body>
@@ -82,6 +89,7 @@
             @endif
 
             <div class="content">
+                <img class="cup-logo" src="{{ asset('images/logo.jpg') }}">
                 <div class="is-pulled-right title m-b-md">
                     Global Education
                 </div>

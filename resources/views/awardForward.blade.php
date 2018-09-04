@@ -2,7 +2,7 @@
 
 @section('award-forward-td')
   <div>
-    <span class="float-right">
+    <span class="float-right award-forward-add-cursor">
       <i class="fa fa-plus mb-4 award-forward-add">Add</i>
     </span>
   </div>
@@ -25,5 +25,5 @@
       {{ $nominees->links() }}
     </div>
   </div>
-  @include('modals.awardForward')
+  @include('modals.awardForward', compact('users'))
 @endsection

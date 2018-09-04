@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use App\User;
 use App\AwardForward;
 
 class HomeController extends Controller
@@ -74,8 +75,9 @@ class HomeController extends Controller
      */
     public function awardForward()
     {
+        $users = User::all()->where('type', '!=', 3);
         $nominees = AwardForward::paginate(8);
-        return view('awardForward', compact('nominees'));
+        return view('awardForward', compact('nominees', 'users'));
     }
 
     /**
@@ -86,7 +88,6 @@ class HomeController extends Controller
     public function awardForwardAdd(Request $request)
     {
         $award = new AwardForward;
-        $award->user_id = auth()->user()->id;
         $award->nominee = $request->nominee;
         $award->description = $request->description;
         $award->save();

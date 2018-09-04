@@ -20,7 +20,9 @@ class CreateExplanationsTable extends Migration
             $table->timestamps();
             $table->foreign('nomination_id')
                 ->references('id')
-                ->on('nominations');
+                ->on('nominations')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
         });
     }
 
