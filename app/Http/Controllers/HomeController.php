@@ -88,7 +88,6 @@ class HomeController extends Controller
     public function awardForwardAdd(Request $request)
     {
         $award = new AwardForward;
-        $award->user_id = auth()->user()->id;
         $award->nominee = $request->nominee;
         $award->description = $request->description;
         $award->save();

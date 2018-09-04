@@ -13,29 +13,32 @@
         <div class="content">
           <form action="awardForward/add" method="POST">
             @csrf
-            <div class="form-group row">
-              <label for="nominee" class="col-sm-4 col-form-label text-md-right">{{ __('Name') }}</label>
 
-              <div class="col-md-6">
-                <select class="award-forward-users" name="nominee">
-                  <option disabled id="default" selected>--- Please select ---</option>
-                  @foreach($users as $user)
-                    <option id="{{ $user->id }}">{{$user->first_name . ' ' . $user->last_name }} </option>
-                  @endforeach
-                </select>
-                @if ($errors->has('nominee'))
-                  <span class="invalid-feedback" role="alert">
-                    <strong>{{ $errors->first('nominee') }}</strong>
-                  </span>
-                @endif
+            <div class="form-group row control field">
+              <label for="nominee" class="col-sm-4 col-form-label text-md-right label">{{ __('Name') }}</label>
+
+              <div class="col-md-6 control">
+                <div class="select">
+                  <select class="award-forward-users" name="nominee">
+                    <option disabled id="default" selected>--- Please select ---</option>
+                    @foreach($users as $user)
+                      <option id="{{ $user->id }}">{{$user->first_name . ' ' . $user->last_name }} </option>
+                    @endforeach
+                  </select>
+                  @if ($errors->has('nominee'))
+                    <span class="invalid-feedback" role="alert">
+                      <strong>{{ $errors->first('nominee') }}</strong>
+                    </span>
+                  @endif
+                </div>
               </div>
             </div>
 
             <div class="form-group row">
-              <label for="description" class="col-md-4 col-form-label text-md-right">{{ __('Description') }}</label>
+              <label for="description" class="col-md-4 col-form-label text-md-right label">{{ __('Description') }}</label>
 
               <div class="col-md-6">
-                <textarea id="description" rows="15" class="form-control{{ $errors->has('description') ? ' is-invalid' : '' }}" name="description" required></textarea>
+                <textarea id="description" rows="15" class="textarea form-control{{ $errors->has('description') ? ' is-invalid' : '' }}" name="description" required></textarea>
 
                 @if ($errors->has('description'))
                   <span class="invalid-feedback" role="alert">

@@ -18,12 +18,13 @@ class CreateNominationsTable extends Migration
             $table->integer('user_id')->unsigned();
             $table->string('nominee', 32)->nullable();
             $table->integer('category')->unsigned();
-            // $table->text('explanation', 255)->nullable();
             $table->integer('quarter')->unsigned();
             $table->timestamps();
             $table->foreign('user_id')
                 ->references('id')
-                ->on('users');
+                ->on('users')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
             $table->foreign('category')
                 ->references('id')
                 ->on('category');
