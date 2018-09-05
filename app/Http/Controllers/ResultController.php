@@ -67,19 +67,22 @@ class ResultController extends Controller
                                     ->where('quarter', $quarter)
                                     ->orderBy('vote', 'desc')
                                     ->groupBy('nominee')
-                                    ->take(1);
+                                    ->take(1)
+                                    ->get();
             $peopleDeveloperNominations = Nominations::select(\DB::raw('id, nominee, count(nominee) as vote'))
                                     ->where('category', 2)
                                     ->where('quarter', $quarter)
                                     ->orderBy('vote', 'desc')
                                     ->groupBy('nominee')
-                                    ->take(1);
+                                    ->take(1)
+                                    ->get();
             $businessOperatorNominations = Nominations::select(\DB::raw('id, nominee, count(nominee) as vote'))
                                     ->where('category', 3)
                                     ->where('quarter', $quarter)
                                     ->orderBy('vote', 'desc')
                                     ->groupBy('nominee')
-                                    ->take(1);
+                                    ->take(1)
+                                    ->get();
             $valueCreatorExplanations = Explanations::all();
             $peopleDeveloperExplanations = Explanations::all();
             $businessOperatorExplanations = Explanations::all();
