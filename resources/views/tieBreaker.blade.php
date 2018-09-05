@@ -42,7 +42,7 @@
         $shortName = preg_replace('/ /', '', $pdVote->nominee);
       @endphp
         <tr class="nominees">
-          <td data-toggle="collapse" href="#pd{{ $shortName }}" role="button" aria-expanded="false" aria-controls="pd{{ $shortName }}"><i class="fas fa-caret-down"></i><i class="fas fa-caret-up" style="display: none;"></i> {{ $pdVote->nominee }}
+          <td data-id="{{ $pdVote->nominee }}" data-toggle="collapse" href="#pd{{ $shortName }}" role="button" aria-expanded="false" aria-controls="pd{{ $shortName }}"><i class="fas fa-caret-down"></i><i class="fas fa-caret-up" style="display: none;"></i> {{ $pdVote->nominee }}
             <div class="collapse" id="pd{{ $shortName }}">
               <div class="card card-body">
                 <ul>
@@ -76,7 +76,7 @@
         $shortName = preg_replace('/ /', '', $boVote->nominee);
       @endphp
         <tr class="nominees">
-          <td data-toggle="collapse" href="#bo{{ $shortName }}" role="button" aria-expanded="false" aria-controls="bo{{ $shortName }}"><i class="fas fa-caret-down"></i><i class="fas fa-caret-up" style="display: none;"></i> {{ $boVote->nominee }}
+          <td data-id="{{ $boVote->nominee }}" data-toggle="collapse" href="#bo{{ $shortName }}" role="button" aria-expanded="false" aria-controls="bo{{ $shortName }}"><i class="fas fa-caret-down"></i><i class="fas fa-caret-up" style="display: none;"></i> {{ $boVote->nominee }}
             <div class="collapse" id="bo{{ $shortName }}">
               <div class="card card-body">
                 <ul>
