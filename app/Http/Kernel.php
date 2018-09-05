@@ -62,5 +62,6 @@ class Kernel extends HttpKernel
         'is_admin' => \App\Http\Middleware\IsAdmin::class,
         'voted' => \App\Http\Middleware\Voted::class,
         'voting_open' => \App\Http\Middleware\IsVotingOpen::class,
+        'quarter_open' => \App\Http\Middleware\QuarterOpen::class,
     ];
 }
