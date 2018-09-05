@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Vote;
 use App\User;
 use App\Nominations;
 use App\Explanations;
@@ -19,34 +18,41 @@ class ResultController extends Controller
     }
 
     /**
-     * Controller function for /results/partial
+     * Controller function for /results
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
         $users = User::all();
         $quarter = Quarter::where('active', 1)->pluck('id')->first();
-        $valueCreatorNominations = Nominations::select(\DB::raw('id, nominee, count(nominee) as vote'))
+        $valueCreatorNominations = Nominations::select(\DB::raw('id, user_id, nominee, count(nominee) as vote'))
                                 ->where('category', 1)
                                 ->where('quarter', $quarter)
+                                ->whereRaw('year(created_at)', now()->year)
                                 ->orderBy('vote', 'desc')
                                 ->groupBy('nominee')
                                 ->get();
-        $peopleDeveloperNominations = Nominations::select(\DB::raw('id, nominee, count(nominee) as vote'))
+        $peopleDeveloperNominations = Nominations::select(\DB::raw('id, user_id, nominee, count(nominee) as vote'))
                                 ->where('category', 2)
                                 ->where('quarter', $quarter)
+                                ->whereRaw('year(created_at)', now()->year)
                                 ->orderBy('vote', 'desc')
                                 ->groupBy('nominee')
                                 ->get();
-        $businessOperatorNominations = Nominations::select(\DB::raw('id, nominee, count(nominee) as vote'))
+        $businessOperatorNominations = Nominations::select(\DB::raw('id, user_id, nominee, count(nominee) as vote'))
                                 ->where('category', 3)
                                 ->where('quarter', $quarter)
+                                ->whereRaw('year(created_at)', now()->year)
                                 ->orderBy('vote', 'desc')
                                 ->groupBy('nominee')
                                 ->get();
-        $valueCreatorExplanations = Explanations::all();
-        $peopleDeveloperExplanations = Explanations::all();
-        $businessOperatorExplanations = Explanations::all();
+
+        $valueCreatorExplanations = DB::select('select * from nominations left join explanations on nominations.id = explanations.nomination_id where year(nominations.created_at) = ? and category = 1', [now()->year]);
+        $valueCreatorExplanations = self::sortExplanationToUsers($valueCreatorExplanations);
+        $peopleDeveloperExplanations = DB::select('select * from nominations left join explanations on nominations.id = explanations.nomination_id where year(nominations.created_at) = ? and category = 2', [now()->year]);
+        $peopleDeveloperExplanations = self::sortExplanationToUsers($peopleDeveloperExplanations);
+        $businessOperatorExplanations = DB::select('select * from nominations left join explanations on nominations.id = explanations.nomination_id where year(nominations.created_at) = ? and category = 3', [now()->year]);
+        $businessOperatorExplanations = self::sortExplanationToUsers($businessOperatorExplanations);
 
         return view('result', compact('users', 'valueCreatorNominations', 'peopleDeveloperNominations', 'businessOperatorNominations', 'valueCreatorExplanations', 'peopleDeveloperExplanations', 'businessOperatorExplanations'));
     }
@@ -65,6 +71,7 @@ class ResultController extends Controller
             $valueCreatorNominations = Nominations::select(\DB::raw('id, nominee, count(nominee) as vote'))
                                     ->where('category', 1)
                                     ->where('quarter', $quarter)
+                                    ->whereRaw('year(created_at)', now()->year)
                                     ->orderBy('vote', 'desc')
                                     ->groupBy('nominee')
                                     ->take(1)
@@ -72,6 +79,7 @@ class ResultController extends Controller
             $peopleDeveloperNominations = Nominations::select(\DB::raw('id, nominee, count(nominee) as vote'))
                                     ->where('category', 2)
                                     ->where('quarter', $quarter)
+                                    ->whereRaw('year(created_at)', now()->year)
                                     ->orderBy('vote', 'desc')
                                     ->groupBy('nominee')
                                     ->take(1)
@@ -79,15 +87,34 @@ class ResultController extends Controller
             $businessOperatorNominations = Nominations::select(\DB::raw('id, nominee, count(nominee) as vote'))
                                     ->where('category', 3)
                                     ->where('quarter', $quarter)
+                                    ->whereRaw('year(created_at)', now()->year)
                                     ->orderBy('vote', 'desc')
                                     ->groupBy('nominee')
                                     ->take(1)
                                     ->get();
-            $valueCreatorExplanations = Explanations::all();
-            $peopleDeveloperExplanations = Explanations::all();
-            $businessOperatorExplanations = Explanations::all();
+            $valueCreatorExplanations = DB::select('select * from nominations left join explanations on nominations.id = explanations.nomination_id where year(nominations.created_at) = ? and category = 1', [now()->year]);
+            $valueCreatorExplanations = self::sortExplanationToUsers($valueCreatorExplanations);
+            $peopleDeveloperExplanations = DB::select('select * from nominations left join explanations on nominations.id = explanations.nomination_id where year(nominations.created_at) = ? and category = 2', [now()->year]);
+            $peopleDeveloperExplanations = self::sortExplanationToUsers($peopleDeveloperExplanations);
+            $businessOperatorExplanations = DB::select('select * from nominations left join explanations on nominations.id = explanations.nomination_id where year(nominations.created_at) = ? and category = 3', [now()->year]);
+            $businessOperatorExplanations = self::sortExplanationToUsers($businessOperatorExplanations);
 
             return view('result', compact('users', 'valueCreatorNominations', 'peopleDeveloperNominations', 'businessOperatorNominations', 'valueCreatorExplanations', 'peopleDeveloperExplanations', 'businessOperatorExplanations'));
         }
+    }
+
+    private function sortExplanationToUsers($category) {
+        $result = array();
+        foreach($category as $value)
+        {
+            if(!isset($result[$value->nominee]))
+            {
+                 $result[$value->nominee] = array();
+            }
+
+            $result[$value->nominee][] = $value->explanation;
+        }
+        // dd($result);
+        return $result;
     }
 }

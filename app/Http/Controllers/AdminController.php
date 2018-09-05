@@ -119,12 +119,16 @@ class AdminController extends Controller
 
     public function tieBreaker()
     {
+        $quarter = Quarter::where('active', 1)->pluck('id')->first();
         $valueCreatorTie = self::nomineeTieBreaker(1);
         $peopleDeveloperTie = self::nomineeTieBreaker(2);
         $businessOperatorTie = self::nomineeTieBreaker(3);
-        $valueCreatorExplanations = Explanations::all();
-        $peopleDeveloperExplanations = Explanations::all();
-        $businessOperatorExplanations = Explanations::all();
+        $valueCreatorExplanations = DB::select('select * from nominations left join explanations on nominations.id = explanations.nomination_id where year(nominations.created_at) = ? and category = 1', [now()->year]);
+        $valueCreatorExplanations = self::sortExplanationToUsers($valueCreatorExplanations);
+        $peopleDeveloperExplanations = DB::select('select * from nominations left join explanations on nominations.id = explanations.nomination_id where year(nominations.created_at) = ? and category = 2', [now()->year]);
+        $peopleDeveloperExplanations = self::sortExplanationToUsers($peopleDeveloperExplanations);
+        $businessOperatorExplanations = DB::select('select * from nominations left join explanations on nominations.id = explanations.nomination_id where year(nominations.created_at) = ? and category = 3', [now()->year]);
+        $businessOperatorExplanations = self::sortExplanationToUsers($businessOperatorExplanations);
 
         return view('tieBreaker', compact('valueCreatorTie', 'peopleDeveloperTie', 'businessOperatorTie', 'valueCreatorExplanations', 'peopleDeveloperExplanations', 'businessOperatorExplanations'));
     }
@@ -134,5 +138,20 @@ class AdminController extends Controller
         $quarter = Quarter::where('active', 1)->pluck('id')->first();
         $tieBreaker = DB::select('select id, nominee, count(*) as count from nominations where quarter = ? and YEAR(created_at) = ? and category = ? group by nominee having count = (select max(count) from (select count(*) as count from nominations where quarter = ? and year(created_at) = ? and category = ? group by nominee ) as count)', [$quarter, now()->year, $category, $quarter, now()->year, $category]);
         return $tieBreaker;
+    }
+
+    private function sortExplanationToUsers($category) {
+        $result = array();
+        foreach($category as $value)
+        {
+            if(!isset($result[$value->nominee]))
+            {
+                 $result[$value->nominee] = array();
+            }
+
+            $result[$value->nominee][] = $value->explanation;
+        }
+        // dd($result);
+        return $result;
     }
 }

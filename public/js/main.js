@@ -250,6 +250,7 @@ $(document).ready(function () {
     $this = $(this);
     let id = $this.attr('id');
     let stat = id === "0" ? 'on' : 'off';
+    let text = stat === 'on' ? 'Users can now start to vote.' : 'Users can\'t access the voting now.';
     $.ajax({
       headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -262,7 +263,7 @@ $(document).ready(function () {
       success: function (result) {
         swal({
           title: "Successfully turned " + stat + " the voting!",
-          text: "Users can now start to vote.",
+          text: text,
           icon: "success",
           button: "Yisss.",
         })

@@ -12,11 +12,13 @@
             <div class="collapse" id="vc{{ $shortName }}">
               <div class="card card-body">
                 <ul>
-                  @foreach($valueCreatorExplanations as $vcEx)
-                    @if($vcEx->nomination_id === $vcVote->id)
-                      <li>{{ $vcEx->explanation }}</li>
-                    @endif
-                  @endforeach
+                  @foreach($valueCreatorExplanations as $key => $vcEx)
+                  @if($key === $vcVote->nominee)
+                    @foreach($vcEx as $v)
+                      <li>{{ $v }}</li>
+                    @endforeach
+                  @endif
+                @endforeach
                 </ul>
               </div>
           </td>
@@ -46,11 +48,13 @@
             <div class="collapse" id="pd{{ $shortName }}">
               <div class="card card-body">
                 <ul>
-                  @foreach($peopleDeveloperExplanations as $pdEx)
-                    @if($pdEx->nomination_id === $pdVote->id)
-                      <li>{{ $pdEx->explanation }}</li>
-                    @endif
-                  @endforeach
+                  @foreach($peopleDeveloperExplanations as $key => $pdEx)
+                  @if($key === $pdVote->nominee)
+                    @foreach($pdEx as $p)
+                      <li>{{ $p }}</li>
+                    @endforeach
+                  @endif
+                @endforeach
                 </ul>
               </div>
           </td>
@@ -80,11 +84,13 @@
             <div class="collapse" id="bo{{ $shortName }}">
               <div class="card card-body">
                 <ul>
-                  @foreach($businessOperatorExplanations as $boEx)
-                    @if($boEx->nomination_id === $boVote->id)
-                      <li>{{ $boEx->explanation }}</li>
-                    @endif
-                  @endforeach
+                  @foreach($businessOperatorExplanations as $key => $boEx)
+                  @if($key === $boVote->nominee)
+                    @foreach($boEx as $b)
+                      <li>{{ $b }}</li>
+                    @endforeach
+                  @endif
+                @endforeach
                 </ul>
               </div>
           </td>
