@@ -8,6 +8,7 @@ use App\User;
 use App\Nominations;
 use App\Quarter;
 use App\Explanations;
+use Illuminate\Support\Facades\DB;
 
 class NominationController extends Controller
 {
@@ -143,28 +144,28 @@ class NominationController extends Controller
                                 ->where('category', 1)
                                 ->where('quarter', $quarter)
                                 ->whereRaw('year(created_at)', now()->year)
-                                ->orderBy('vote', 'desc')
+                                ->orderBy('nominee')
                                 ->groupBy('nominee')
                                 ->get();
         $peopleDeveloperNominations = Nominations::select(\DB::raw('id, nominee, count(nominee) as vote'))
                                 ->where('category', 2)
                                 ->where('quarter', $quarter)
                                 ->whereRaw('year(created_at)', now()->year)
-                                ->orderBy('vote', 'desc')
+                                ->orderBy('nominee')
                                 ->groupBy('nominee')
                                 ->get();
         $businessOperatorNominations = Nominations::select(\DB::raw('id, nominee, count(nominee) as vote'))
                                 ->where('category', 3)
                                 ->where('quarter', $quarter)
                                 ->whereRaw('year(created_at)', now()->year)
-                                ->orderBy('vote', 'desc')
+                                ->orderBy('nominee')
                                 ->groupBy('nominee')
                                 ->get();
-        $valueCreatorExplanations = DB::select('select * from nominations left join explanations on nominations.id = explanations.nomination_id where year(nominations.created_at) = ? and category = 1', [now()->year]);
+        $valueCreatorExplanations = DB::select('select * from nominations left join explanations on nominations.id = explanations.nomination_id where year(nominations.created_at) = ? and category = 1 and quarter = ? and explanation is not null', [now()->year, $quarter]);
         $valueCreatorExplanations = self::sortExplanationToUsers($valueCreatorExplanations);
-        $peopleDeveloperExplanations = DB::select('select * from nominations left join explanations on nominations.id = explanations.nomination_id where year(nominations.created_at) = ? and category = 2', [now()->year]);
+        $peopleDeveloperExplanations = DB::select('select * from nominations left join explanations on nominations.id = explanations.nomination_id where year(nominations.created_at) = ? and category = 2 and quarter = ? and explanation is not null', [now()->year, $quarter]);
         $peopleDeveloperExplanations = self::sortExplanationToUsers($peopleDeveloperExplanations);
-        $businessOperatorExplanations = DB::select('select * from nominations left join explanations on nominations.id = explanations.nomination_id where year(nominations.created_at) = ? and category = 3', [now()->year]);
+        $businessOperatorExplanations = DB::select('select * from nominations left join explanations on nominations.id = explanations.nomination_id where year(nominations.created_at) = ? and category = 3 and quarter = ? and explanation is not null', [now()->year, $quarter]);
         $businessOperatorExplanations = self::sortExplanationToUsers($businessOperatorExplanations);
 
         $doneValueCreator = $this->voteDoneValueCreator();

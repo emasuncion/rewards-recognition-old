@@ -22,7 +22,8 @@ $(document).ready(function () {
   // Value Creator
   $('.add-vote-vc').click(function (e) {
     e.preventDefault();
-    var nominee = $(this).parent().prev().prev().attr('data-id');
+    var nominee = $(this).parent().prev().attr('data-id');
+    alert(nominee);
     $.ajax({
       headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -53,7 +54,7 @@ $(document).ready(function () {
   // People Developer
   $('.add-vote-pd').click(function (e) {
     e.preventDefault();
-    var nominee = $(this).parent().prev().prev().attr('data-id');
+    var nominee = $(this).parent().prev().attr('data-id');
     $.ajax({
       headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -84,7 +85,7 @@ $(document).ready(function () {
 // Business Operator
   $('.add-vote-bo').click(function (e) {
     e.preventDefault();
-    var nominee = $(this).parent().prev().prev().attr('data-id');
+    var nominee = $(this).parent().prev().attr('data-id');
     $.ajax({
       headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

@@ -3,7 +3,7 @@
 @section('award-forward-td')
   <div>
     <span class="float-right award-forward-add-cursor">
-      <i class="fa fa-plus mb-4 award-forward-add">Add</i>
+      <button class="btn btn-dark btn-sm mb-4 award-forward-add">Add</button>
     </span>
   </div>
   <table id="award-forward-table" class="table table-striped table-bordered nowrap">
