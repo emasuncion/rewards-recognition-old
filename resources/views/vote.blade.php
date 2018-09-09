@@ -11,17 +11,19 @@
           <div class="collapse" id="vc{{ $shortName }}">
             <div class="card card-body">
               <ul>
-                @foreach($valueCreatorExplanations as $vcEx)
-                  @if($vcEx->nomination_id === $vcVote->id)
-                    <li>{{ $vcEx->explanation }}</li>
+                @foreach($valueCreatorExplanations as $key => $vcEx)
+                  @if($key === $vcVote->nominee)
+                    @foreach($vcEx as $v)
+                      <li>{{ $v }}</li>
+                    @endforeach
                   @endif
                 @endforeach
               </ul>
             </div>
         </td>
-        <td>{{ $vcVote->vote }}</td>
+        {{-- <td>{{ $vcVote->vote }}</td> --}}
         @if(count($doneValueCreator) < 1)
-          <td><i class="fa fa-plus add-vote-vc"></i></td>
+          <td><button class="btn btn-dark btn-sm add-vote-vc">VOTE</button></td>
         @endif
       </tr>
     @endforeach
@@ -39,17 +41,19 @@
           <div class="collapse" id="pd{{ $shortName }}">
             <div class="card card-body">
               <ul>
-                @foreach($peopleDeveloperExplanations as $pdEx)
-                  @if($pdEx->nomination_id === $pdVote->id)
-                    <li>{{ $pdEx->explanation }}</li>
+                @foreach($peopleDeveloperExplanations as $key => $pdEx)
+                  @if($key === $pdVote->nominee)
+                    @foreach($pdEx as $p)
+                      <li>{{ $p }}</li>
+                    @endforeach
                   @endif
                 @endforeach
               </ul>
             </div>
         </td>
-        <td>{{ $pdVote->vote }}</td>
+        {{-- <td>{{ $pdVote->vote }}</td> --}}
         @if(count($donePeopleDeveloper) < 1)
-          <td><i class="fa fa-plus add-vote-pd"></i></td>
+          <td><button class="btn btn-dark btn-sm add-vote-pd">VOTE</button></td>
         @endif
       </tr>
       @endforeach
@@ -67,17 +71,19 @@
           <div class="collapse" id="bo{{ $shortName }}">
             <div class="card card-body">
               <ul>
-                @foreach($businessOperatorExplanations as $boEx)
-                  @if($boEx->nomination_id === $boVote->id)
-                    <li>{{ $boEx->explanation }}</li>
+                @foreach($businessOperatorExplanations as $key => $boEx)
+                  @if($key === $boVote->nominee)
+                    @foreach($boEx as $b)
+                      <li>{{ $b }}</li>
+                    @endforeach
                   @endif
                 @endforeach
               </ul>
             </div>
         </td>
-        <td>{{ $boVote->vote }}</td>
+        {{-- <td>{{ $boVote->vote }}</td> --}}
         @if(count($doneBusinessOperator) < 1)
-          <td><i class="fa fa-plus add-vote-bo"></i></td>
+          <td><button class="btn btn-dark btn-sm add-vote-bo">VOTE</button></td>
         @endif
       </tr>
       @endforeach

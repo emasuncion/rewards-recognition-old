@@ -123,11 +123,11 @@ class AdminController extends Controller
         $valueCreatorTie = self::nomineeTieBreaker(1);
         $peopleDeveloperTie = self::nomineeTieBreaker(2);
         $businessOperatorTie = self::nomineeTieBreaker(3);
-        $valueCreatorExplanations = DB::select('select * from nominations left join explanations on nominations.id = explanations.nomination_id where year(nominations.created_at) = ? and category = 1', [now()->year]);
+        $valueCreatorExplanations = DB::select('select * from nominations left join explanations on nominations.id = explanations.nomination_id where year(nominations.created_at) = ? and category = 1 and quarter = ? and explanation is not null', [now()->year, $quarter]);
         $valueCreatorExplanations = self::sortExplanationToUsers($valueCreatorExplanations);
-        $peopleDeveloperExplanations = DB::select('select * from nominations left join explanations on nominations.id = explanations.nomination_id where year(nominations.created_at) = ? and category = 2', [now()->year]);
+        $peopleDeveloperExplanations = DB::select('select * from nominations left join explanations on nominations.id = explanations.nomination_id where year(nominations.created_at) = ? and category = 2 and quarter = ? and explanation is not null', [now()->year, $quarter]);
         $peopleDeveloperExplanations = self::sortExplanationToUsers($peopleDeveloperExplanations);
-        $businessOperatorExplanations = DB::select('select * from nominations left join explanations on nominations.id = explanations.nomination_id where year(nominations.created_at) = ? and category = 3', [now()->year]);
+        $businessOperatorExplanations = DB::select('select * from nominations left join explanations on nominations.id = explanations.nomination_id where year(nominations.created_at) = ? and category = 3 and quarter = ? and explanation is not null', [now()->year, $quarter]);
         $businessOperatorExplanations = self::sortExplanationToUsers($businessOperatorExplanations);
 
         return view('tieBreaker', compact('valueCreatorTie', 'peopleDeveloperTie', 'businessOperatorTie', 'valueCreatorExplanations', 'peopleDeveloperExplanations', 'businessOperatorExplanations'));
