@@ -25,8 +25,7 @@ Route::get('admin', 'AdminController@index')
     ->middleware('is_admin')
     ->name('admin');
 Route::get('nominate', 'NominationController@index')
-    ->middleware('voted')
-    ->middleware('voting_open')
+    ->middleware('nomination_open')
     ->middleware('quarter_open')
     ->name('nominate');
 Route::get('vote', 'NominationController@vote')
@@ -68,4 +67,6 @@ Route::post('admin/deleteUser', 'AdminController@deleteUser')
     ->middleware('is_admin');
 Route::post('awardForward/add', 'HomeController@awardForwardAdd');
 Route::post('admin/turnVote', 'AdminController@turnVote')
+    ->middleware('is_admin');
+Route::post('admin/turnNomination', 'AdminController@turnNomination')
     ->middleware('is_admin');

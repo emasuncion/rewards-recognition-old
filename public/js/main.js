@@ -23,7 +23,6 @@ $(document).ready(function () {
   $('.add-vote-vc').click(function (e) {
     e.preventDefault();
     var nominee = $(this).parent().prev().attr('data-id');
-    alert(nominee);
     $.ajax({
       headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -264,6 +263,40 @@ $(document).ready(function () {
       success: function (result) {
         swal({
           title: "Successfully turned " + stat + " the voting!",
+          text: text,
+          icon: "success",
+          button: "Yisss.",
+        })
+        .then(results => {
+          $('.modal').removeClass('is-active');
+          location.reload();
+        });
+      },
+      error: function (result) {
+        swal("Ooops!", "Sorry, something went wrong", "error");
+      }
+    });
+  });
+
+  // Turn on/off nomination
+  $('.admin-nomination').click(function(e) {
+    e.preventDefault();
+    $this = $(this);
+    let id = $this.attr('id');
+    let stat = id === "0" ? 'on' : 'off';
+    let text = stat === 'on' ? 'Users can now start to nominate.' : 'Users are not allowed to nominate anymore.';
+    $.ajax({
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      },
+      type: 'POST',
+      url: '/admin/turnNomination',
+      data: {
+        id: id
+      },
+      success: function (result) {
+        swal({
+          title: "Successfully turned " + stat + " the nomination!",
           text: text,
           icon: "success",
           button: "Yisss.",

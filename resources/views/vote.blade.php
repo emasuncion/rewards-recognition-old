@@ -22,7 +22,7 @@
             </div>
         </td>
         {{-- <td>{{ $vcVote->vote }}</td> --}}
-        @if(count($doneValueCreator) < 1)
+        @if(!$doneValueCreator)
           <td><button class="btn btn-dark btn-sm add-vote-vc">VOTE</button></td>
         @endif
       </tr>
@@ -52,7 +52,7 @@
             </div>
         </td>
         {{-- <td>{{ $pdVote->vote }}</td> --}}
-        @if(count($donePeopleDeveloper) < 1)
+        @if(!$donePeopleDeveloper)
           <td><button class="btn btn-dark btn-sm add-vote-pd">VOTE</button></td>
         @endif
       </tr>
@@ -82,7 +82,7 @@
             </div>
         </td>
         {{-- <td>{{ $boVote->vote }}</td> --}}
-        @if(count($doneBusinessOperator) < 1)
+        @if(!$doneBusinessOperator)
           <td><button class="btn btn-dark btn-sm add-vote-bo">VOTE</button></td>
         @endif
       </tr>

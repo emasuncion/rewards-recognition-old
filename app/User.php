@@ -7,7 +7,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Employee;
 use App\Nominations;
 use App\Quarter;
-use App\Voting;
+use App\VoteStatus;
+use App\Vote;
 
 class User extends Authenticatable
 {
@@ -48,22 +49,42 @@ class User extends Authenticatable
     public function voted()
     {
         $quarter = Quarter::where('active', 1)->pluck('id')->first();
-        $nominations = Nominations::select('category')->where('user_id', auth()->user()->id)
-                        ->where(function ($query) {
-                            $query->where('category', 1)
-                                ->orWhere('category', 2)
-                                ->orWhere('category', 3);
-                        })
-                        ->where('nominee', '!=', '')
-                        ->where('quarter', $quarter)
-                        ->groupBy('category')
-                        ->get();
-        return count($nominations) === 3;
+        // OLD implementation <1 vote per user>
+        // $nominations = Vote::select('category')->where('user_id', auth()->user()->id)
+        //                 ->where(function ($query) {
+        //                     $query->where('category', 1)
+        //                         ->orWhere('category', 2)
+        //                         ->orWhere('category', 3);
+        //                 })
+        //                 ->where('nominee', '!=', '')
+        //                 ->where('quarter', $quarter)
+        //                 ->groupBy('category')
+        //                 ->get();
+        // return count($nominations) === 3;
+
+        // <5 votes per user>
+        $votes = Vote::selectRaw('count(*) as count')->where('user_id', auth()->user()->id)
+                    ->where(function($query) {
+                        $query->where('category', 1)
+                        ->orWhere('category', 2)
+                        ->orWhere('category', 3);
+                    })
+                    ->whereRaw('nominee is not null')
+                    ->where('quarter', $quarter)
+                    ->whereRaw('year(created_at)', now()->year)
+                    ->get()
+                    ->first();
+        return $votes->count === 15;
     }
 
     public function votingOpen()
     {
-        return Voting::all()->where('votingOpen', 1)->first();
+        return VoteStatus::all()->where('votingOpen', 1)->first();
+    }
+
+    public function nominationOpen()
+    {
+        return VoteStatus::all()->where('nominationOpen', 1)->first();
     }
 
     public function quarterOpen()

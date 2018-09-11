@@ -10,7 +10,7 @@ use App\Nominate;
 use App\User;
 use App\Employee;
 use App\Quarter;
-use App\Voting;
+use App\VoteStatus;
 use App\Explanations;
 
 class AdminController extends Controller
@@ -38,7 +38,7 @@ class AdminController extends Controller
                     ->orderBy('first_name', 'asc')
                     ->paginate(5);
         $quarter = Quarter::all();
-        $voting = Voting::first();
+        $voting = VoteStatus::first();
         return view('settings', compact('users', 'quarter', 'voting'));
     }
 
@@ -92,11 +92,6 @@ class AdminController extends Controller
 
     public function changeQuarter(Request $request)
     {
-        /*if ($request->checkCounter > 1) {
-            return response()->json([
-                'success' => 'false'
-            ]);
-        }*/
         $active = $request->active === 'true' ? 1 : 0;
         Quarter::where('active', 1)
                 ->update(['active' => 0]);
@@ -110,8 +105,18 @@ class AdminController extends Controller
     public function turnVote(Request $request)
     {
         $status = $request->id === "0" ? 1 : 0;
-        Voting::where('votingOpen', $request->id)
+        VoteStatus::where('votingOpen', $request->id)
             ->update(['votingOpen' => $status]);
+        return response()->json([
+            'success' => 'true'
+        ]);
+    }
+
+    public function turnNomination()
+    {
+        $status = request()->id === "0" ? 1 : 0;
+        VoteStatus::where('nominationOpen', request()->id)
+            ->update(['nominationOpen' => $status]);
         return response()->json([
             'success' => 'true'
         ]);
@@ -136,7 +141,7 @@ class AdminController extends Controller
     private function nomineeTieBreaker(int $category)
     {
         $quarter = Quarter::where('active', 1)->pluck('id')->first();
-        $tieBreaker = DB::select('select id, nominee, count(*) as count from nominations where quarter = ? and YEAR(created_at) = ? and category = ? group by nominee having count = (select max(count) from (select count(*) as count from nominations where quarter = ? and year(created_at) = ? and category = ? group by nominee ) as count)', [$quarter, now()->year, $category, $quarter, now()->year, $category]);
+        $tieBreaker = DB::select('select id, nominee, count(*) as count from votes where quarter = ? and YEAR(created_at) = ? and category = ? group by nominee having count = (select max(count) from (select count(*) as count from votes where quarter = ? and year(created_at) = ? and category = ? group by nominee ) as count)', [$quarter, now()->year, $category, $quarter, now()->year, $category]);
         return $tieBreaker;
     }
 

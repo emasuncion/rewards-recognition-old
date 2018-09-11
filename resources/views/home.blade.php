@@ -73,18 +73,19 @@
       <footer class="card-content">
         <p class="card-footer-item">
           <span>
-            @if(auth()->user()->votingOpen())
+            @if(auth()->user()->nominationOpen())
+              <a href="/nominate" class="button is-primary">
+                Nominate
+              </a>
+            @elseif(auth()->user()->votingOpen())
               @if(!auth()->user()->voted())
-                <a href="/nominate" class="button is-primary">
-                  Nominate
-                </a>
                 <a href="/vote" class="button is-warning">
                   Vote
                 </a>
               @else
-                <a href="/results/partial" class="button is-dark">
-                  See partial results
-                </a>
+              <a href="/results/partial" class="button is-dark">
+                See partial results
+              </a>
               @endif
             @else
               <a href="/results/submitted" class="button is-success">

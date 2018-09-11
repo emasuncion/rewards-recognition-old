@@ -6,6 +6,7 @@ use App\User;
 use App\Nominations;
 use App\Explanations;
 use App\Quarter;
+use App\Vote;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -25,21 +26,21 @@ class ResultController extends Controller
     {
         $users = User::all();
         $quarter = Quarter::where('active', 1)->pluck('id')->first();
-        $valueCreatorNominations = Nominations::select(\DB::raw('id, user_id, nominee, count(nominee) as vote'))
+        $valueCreatorNominations = Vote::select(\DB::raw('id, user_id, nominee, count(nominee) as vote'))
                                 ->where('category', 1)
                                 ->where('quarter', $quarter)
                                 ->whereRaw('year(created_at)', now()->year)
                                 ->orderBy('vote', 'desc')
                                 ->groupBy('nominee')
                                 ->get();
-        $peopleDeveloperNominations = Nominations::select(\DB::raw('id, user_id, nominee, count(nominee) as vote'))
+        $peopleDeveloperNominations = Vote::select(\DB::raw('id, user_id, nominee, count(nominee) as vote'))
                                 ->where('category', 2)
                                 ->where('quarter', $quarter)
                                 ->whereRaw('year(created_at)', now()->year)
                                 ->orderBy('vote', 'desc')
                                 ->groupBy('nominee')
                                 ->get();
-        $businessOperatorNominations = Nominations::select(\DB::raw('id, user_id, nominee, count(nominee) as vote'))
+        $businessOperatorNominations = Vote::select(\DB::raw('id, user_id, nominee, count(nominee) as vote'))
                                 ->where('category', 3)
                                 ->where('quarter', $quarter)
                                 ->whereRaw('year(created_at)', now()->year)
@@ -68,7 +69,7 @@ class ResultController extends Controller
         } else {
             $users = User::all();
             $quarter = Quarter::where('active', 1)->pluck('id')->first();
-            $valueCreatorNominations = Nominations::select(\DB::raw('id, nominee, count(nominee) as vote'))
+            $valueCreatorNominations = Vote::select(\DB::raw('id, nominee, count(nominee) as vote'))
                                     ->where('category', 1)
                                     ->where('quarter', $quarter)
                                     ->whereRaw('year(created_at)', now()->year)
@@ -76,7 +77,7 @@ class ResultController extends Controller
                                     ->groupBy('nominee')
                                     ->take(1)
                                     ->get();
-            $peopleDeveloperNominations = Nominations::select(\DB::raw('id, nominee, count(nominee) as vote'))
+            $peopleDeveloperNominations = Vote::select(\DB::raw('id, nominee, count(nominee) as vote'))
                                     ->where('category', 2)
                                     ->where('quarter', $quarter)
                                     ->whereRaw('year(created_at)', now()->year)
@@ -84,7 +85,7 @@ class ResultController extends Controller
                                     ->groupBy('nominee')
                                     ->take(1)
                                     ->get();
-            $businessOperatorNominations = Nominations::select(\DB::raw('id, nominee, count(nominee) as vote'))
+            $businessOperatorNominations = Vote::select(\DB::raw('id, nominee, count(nominee) as vote'))
                                     ->where('category', 3)
                                     ->where('quarter', $quarter)
                                     ->whereRaw('year(created_at)', now()->year)
@@ -114,7 +115,6 @@ class ResultController extends Controller
 
             $result[$value->nominee][] = $value->explanation;
         }
-        // dd($result);
         return $result;
     }
 }

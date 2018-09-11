@@ -4,8 +4,8 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Voting extends Model
+class VoteStatus extends Model
 {
-    protected $table = 'voting';
+    protected $table = 'vote_status';
     public $timestamps = false;
 }

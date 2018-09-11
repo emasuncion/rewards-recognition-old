@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use App\User;
 use App\Nominations;
 use App\Quarter;
+use App\Vote;
 use App\Explanations;
 use Illuminate\Support\Facades\DB;
 
@@ -19,26 +20,29 @@ class NominationController extends Controller
         $this->nomination = new Nominations;
     }
 
+    /**
+     * Controller for /nominate
+     * @return Illuminate\Http\Request
+     */
     public function index()
     {
         $users = User::all();
         $quarter = Quarter::where('active', 1)->pluck('id')->first();
-        $doneValueCreator = Nominations::where('user_id', auth()->user()->id)
+        $doneValueCreator = Vote::where('user_id', auth()->user()->id)
                             ->where('category', 1)
                             ->where('quarter', $quarter)
                             ->where('nominee', '!=', '')
                             ->whereRaw('year(created_at)', now()->year)
                             ->first();
-                            // dd(empty($doneValueCreator) );
         $doneValueCreator = empty($doneValueCreator) ? 1 : 0;
-        $donePeopleDeveloper = Nominations::where('user_id', auth()->user()->id)
+        $donePeopleDeveloper = Vote::where('user_id', auth()->user()->id)
                             ->where('category', 2)
                             ->where('quarter', $quarter)
                             ->where('nominee', '!=', '')
                             ->whereRaw('year(created_at)', now()->year)
                             ->first();
         $donePeopleDeveloper = empty($donePeopleDeveloper) ? 1 : 0;
-        $doneBusinessOperator = Nominations::where('user_id', auth()->user()->id)
+        $doneBusinessOperator = Vote::where('user_id', auth()->user()->id)
                             ->where('category', 3)
                             ->where('quarter', $quarter)
                             ->where('nominee', '!=', '')
@@ -136,6 +140,10 @@ class NominationController extends Controller
         }
     }
 
+    /**
+     * Controller function for /vote
+     * @return Illuminate\Http\Request
+     */
     public function vote()
     {
         $users = User::all();
@@ -168,38 +176,38 @@ class NominationController extends Controller
         $businessOperatorExplanations = DB::select('select * from nominations left join explanations on nominations.id = explanations.nomination_id where year(nominations.created_at) = ? and category = 3 and quarter = ? and explanation is not null', [now()->year, $quarter]);
         $businessOperatorExplanations = self::sortExplanationToUsers($businessOperatorExplanations);
 
-        $doneValueCreator = $this->voteDoneValueCreator();
-        $donePeopleDeveloper = $this->voteDonePeopleDeveloper();
-        $doneBusinessOperator = $this->voteDoneBusinessOperator();
+        $doneValueCreator = $this->voteDone(1);
+        $donePeopleDeveloper = $this->voteDone(2);
+        $doneBusinessOperator = $this->voteDone(3);
 
         return view('vote', compact('users', 'valueCreatorNominations', 'peopleDeveloperNominations', 'businessOperatorNominations', 'valueCreatorExplanations', 'peopleDeveloperExplanations', 'businessOperatorExplanations', 'doneValueCreator', 'donePeopleDeveloper', 'doneBusinessOperator'));
     }
 
     public function addVote(Request $request)
     {
-        $nominations = new Nominations;
+        $vote = new Vote;
         $quarter = Quarter::where('active', 1)->pluck('id')->first();
         switch($request->position) {
             case 'value-creator':
-                $nominations->user_id = auth()->user()->id;
-                $nominations->nominee = $request->nominee;
-                $nominations->category = 1;
-                $nominations->quarter = $quarter;
-                $nominations->save();
+                $vote->user_id = auth()->user()->id;
+                $vote->nominee = $request->nominee;
+                $vote->category = 1;
+                $vote->quarter = $quarter;
+                $vote->save();
                 break;
             case 'people-developer':
-            $nominations->user_id = auth()->user()->id;
-                $nominations->nominee = $request->nominee;
-                $nominations->category = 2;
-                $nominations->quarter = $quarter;
-                $nominations->save();
+            $vote->user_id = auth()->user()->id;
+                $vote->nominee = $request->nominee;
+                $vote->category = 2;
+                $vote->quarter = $quarter;
+                $vote->save();
                 break;
             case 'business-operator':
-                $nominations->user_id = auth()->user()->id;
-                $nominations->nominee = $request->nominee;
-                $nominations->category = 3;
-                $nominations->quarter = $quarter;
-                $nominations->save();
+                $vote->user_id = auth()->user()->id;
+                $vote->nominee = $request->nominee;
+                $vote->category = 3;
+                $vote->quarter = $quarter;
+                $vote->save();
                 break;
             default:
                 break;
@@ -209,46 +217,15 @@ class NominationController extends Controller
         ]);
     }
 
-    public function filterVoters($id)
-    {
-        $nominations = Nominations::select('category')->where('user_id', $id)
-                        ->where('category', 1)
-                        ->orWhere('category', 2)
-                        ->orWhere('category', 3)
-                        ->whereRaw('year(created_at)', now()->year)
-                        ->groupBy('category')
-                        ->get();
-        return count($nominations) === 3;
-    }
-
-    public function voteDoneValueCreator()
+    public function voteDone(int $category)
     {
         $quarter = Quarter::where('active', 1)->pluck('id')->first();
-        return Nominations::where('user_id', auth()->user()->id)
-                    ->where('category', 1)
+        $vote = Vote::where('user_id', auth()->user()->id)
+                    ->where('category', $category)
                     ->where('quarter', $quarter)
                     ->whereRaw('year(created_at)', now()->year)
                     ->get();
-    }
-
-    public function voteDonePeopleDeveloper()
-    {
-        $quarter = Quarter::where('active', 1)->pluck('id')->first();
-        return Nominations::where('user_id', auth()->user()->id)
-                    ->where('category', 2)
-                    ->where('quarter', $quarter)
-                    ->whereRaw('year(created_at)', now()->year)
-                    ->get();
-    }
-
-    public function voteDoneBusinessOperator()
-    {
-        $quarter = Quarter::where('active', 1)->pluck('id')->first();
-        return Nominations::where('user_id', auth()->user()->id)
-                    ->where('category', 3)
-                    ->where('quarter', $quarter)
-                    ->whereRaw('year(created_at)', now()->year)
-                    ->get();
+        return count($vote) >= 5;
     }
 
     private function sortExplanationToUsers($category) {
@@ -262,7 +239,6 @@ class NominationController extends Controller
 
             $result[$value->nominee][] = $value->explanation;
         }
-        // dd($result);
         return $result;
     }
 }

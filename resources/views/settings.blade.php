@@ -27,7 +27,10 @@
   <table>
     <tr>
       <td class="admin-options">
-        <a href="/admin/tieBreaker" class="button is-warning admin-tie-breaker">Tie breaker</a>
+        @php
+          $stat = $voting->nominationOpen === 0 ? 'on' : 'off';
+        @endphp
+        <a id="{{ $voting->nominationOpen }}" href="/admin/turnNomination" class="button is-success admin-nomination">Turn {{ $stat }} nomination</a>
       </td>
       <td class="admin-options">
         @php
@@ -38,10 +41,10 @@
     </tr>
     <tr>
       <td class="admin-options">
-        <a disabled href="#" class="button is-info admin-email">Email notification</a>
+        <a href="/admin/tieBreaker" class="button is-warning admin-tie-breaker">Tie breaker</a>
       </td>
       <td class="admin-options">
-        <a disabled href="#" class="button is-success admin-export">Export winners to excel file</a>
+        <a disabled href="#" class="button is-info admin-export">Export winners to excel file</a>
       </td>
     </tr>
   </table>

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateVotingTable extends Migration
+class CreateVoteStatusTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,12 @@ class CreateVotingTable extends Migration
      */
     public function up()
     {
-        Schema::create('voting', function (Blueprint $table) {
+        Schema::create('vote_status', function (Blueprint $table) {
             $table->tinyInteger('votingOpen')->default(0);
+            $table->tinyInteger('nominationOpen')->default(0);
         });
 
-        DB::table('voting')->insert(['votingOpen' => 0]);
+        DB::table('vote_status')->insert(['votingOpen' => 0, 'nominationOpen' => 0]);
     }
 
     /**

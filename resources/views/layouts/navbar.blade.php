@@ -30,10 +30,11 @@
                     @php
                         $routes = ['results', 'vote', 'nominate'];
                     @endphp
-                    @if(auth()->user()->isAdmin() && !auth()->user()->voted() && auth()->user()->votingOpen() && (in_array(Route::current()->getName(), $routes)))
+                    @if(auth()->user()->isAdmin() && !auth()->user()->voted() && auth()->user()->nominationOpen() && (in_array(Route::current()->getName(), $routes)))
                         <li class="nav-item">
                             <a class="nav-link heading2" href="/nominate">Nominate</a>
                         </li>
+                    @elseif(auth()->user()->isAdmin() && !auth()->user()->voted() && auth()->user()->votingOpen() && (in_array(Route::current()->getName(), $routes)))
                         <li class="nav-item">
                             <a class="nav-link heading2" href="/vote">Vote</a>
                         </li>
