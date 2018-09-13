@@ -24,7 +24,7 @@
           </td>
           <td>{{ $vcVote->count }}</td>
           @if(count($valueCreatorTie) > 1)
-            <td><i class="fa fa-plus add-vote-vc"></i></td>
+            <td><button class="btn btn-dark btn-sm add-vote-vc">VOTE</button></td>
           @endif
         </tr>
       @endforeach
@@ -60,7 +60,7 @@
           </td>
           <td>{{ $pdVote->count }}</td>
           @if(count($peopleDeveloperTie) > 1)
-            <td><i class="fa fa-plus add-vote-pd"></i></td>
+            <td><button class="btn btn-dark btn-sm add-vote-pd">VOTE</button></td>
           @endif
         </tr>
         @endforeach
@@ -96,7 +96,7 @@
           </td>
           <td>{{ $boVote->count }}</td>
           @if(count($businessOperatorTie) > 1)
-            <td><i class="fa fa-plus add-vote-bo"></i></td>
+            <td><button class="btn btn-dark btn-sm add-vote-bo">VOTE</button></td>
           @endif
         </tr>
         @endforeach

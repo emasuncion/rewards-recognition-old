@@ -18,6 +18,6 @@ class QuarterOpen
         if (auth()->user()->quarterOpen()) {
             return $next($request);
         }
-        return redirect('home');
+        return redirect('admin');
     }
 }

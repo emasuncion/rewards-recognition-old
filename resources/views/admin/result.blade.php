@@ -37,7 +37,7 @@
         <div class="card h-100">
           <header class="card-header">
             <p class="card-header-title is-centered">
-              Bussiness Operator
+              Business Operator
             </p>
           </header>
           <div class="card-content">

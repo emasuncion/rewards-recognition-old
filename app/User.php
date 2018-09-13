@@ -79,17 +79,17 @@ class User extends Authenticatable
 
     public function votingOpen()
     {
-        return VoteStatus::all()->where('votingOpen', 1)->first();
+        return VoteStatus::where('votingOpen', 1)->pluck('votingOpen')->first();
     }
 
     public function nominationOpen()
     {
-        return VoteStatus::all()->where('nominationOpen', 1)->first();
+        return VoteStatus::where('nominationOpen', 1)->pluck('nominationOpen')->first();
     }
 
     public function quarterOpen()
     {
-        return Quarter::all()->where('active', 1)->first();
+        return Quarter::where('active', 1)->pluck('active')->first();
     }
 
     public function nominations()

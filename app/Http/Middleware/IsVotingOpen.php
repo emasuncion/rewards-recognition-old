@@ -18,6 +18,6 @@ class IsVotingOpen
         if (auth()->user()->votingOpen()) {
             return $next($request);
         }
-        return redirect('home');
+        return redirect('admin');
     }
 }

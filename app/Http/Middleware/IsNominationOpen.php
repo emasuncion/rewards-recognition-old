@@ -18,6 +18,6 @@ class IsNominationOpen
         if (auth()->user()->nominationOpen()) {
             return $next($request);
         }
-        return redirect('home');
+        return redirect('admin');
     }
 }
