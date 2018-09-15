@@ -105,21 +105,32 @@ class AdminController extends Controller
     public function turnVote(Request $request)
     {
         $status = $request->id === "0" ? 1 : 0;
-        VoteStatus::where('votingOpen', $request->id)
-            ->update(['votingOpen' => $status]);
-        return response()->json([
-            'success' => 'true'
-        ]);
+        $nominationOpen = VoteStatus::all()->pluck('nominationOpen')->first();
+        if ($nominationOpen === 1) {
+            return response()->json(['success' => 'false']);
+        } else {
+            VoteStatus::where('votingOpen', $request->id)
+                ->update(['votingOpen' => $status]);
+            return response()->json([
+                'success' => 'true'
+            ]);
+        }
+
     }
 
     public function turnNomination()
     {
         $status = request()->id === "0" ? 1 : 0;
-        VoteStatus::where('nominationOpen', request()->id)
-            ->update(['nominationOpen' => $status]);
-        return response()->json([
-            'success' => 'true'
-        ]);
+        $votingOpen = VoteStatus::all()->pluck('votingOpen')->first();
+        if ($votingOpen === 1) {
+            return response()->json(["success" => 'false']);
+        } else {
+            VoteStatus::where('nominationOpen', request()->id)
+                ->update(['nominationOpen' => $status]);
+            return response()->json([
+                'success' => 'true'
+            ]);
+        }
     }
 
     public function tieBreaker()

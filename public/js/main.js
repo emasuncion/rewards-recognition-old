@@ -23,6 +23,9 @@ $(document).ready(function () {
   $('.add-vote-vc').click(function (e) {
     e.preventDefault();
     var nominee = $(this).parent().prev().attr('data-id');
+    if (nominee === undefined) {
+      nominee = $(this).parent().prev().prev().attr('data-id');
+    }
     $.ajax({
       headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -54,6 +57,9 @@ $(document).ready(function () {
   $('.add-vote-pd').click(function (e) {
     e.preventDefault();
     var nominee = $(this).parent().prev().attr('data-id');
+    if (nominee === undefined) {
+      nominee = $(this).parent().prev().prev().attr('data-id');
+    }
     $.ajax({
       headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -85,6 +91,9 @@ $(document).ready(function () {
   $('.add-vote-bo').click(function (e) {
     e.preventDefault();
     var nominee = $(this).parent().prev().attr('data-id');
+    if (nominee === undefined) {
+      nominee = $(this).parent().prev().prev().attr('data-id');
+    }
     $.ajax({
       headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -261,16 +270,29 @@ $(document).ready(function () {
         id: id
       },
       success: function (result) {
-        swal({
-          title: "Successfully turned " + stat + " the voting!",
-          text: text,
-          icon: "success",
-          button: "Yisss.",
-        })
-        .then(results => {
-          $('.modal').removeClass('is-active');
-          location.reload();
-        });
+        if (result.success === 'true') {
+          swal({
+            title: "Successfully turned " + stat + " the voting!",
+            text: text,
+            icon: "success",
+            button: "Yisss.",
+          })
+          .then(results => {
+            $('.modal').removeClass('is-active');
+            location.reload();
+          });
+        } else {
+          swal({
+            title: "Aww, snap!",
+            text: "Sorry, voting and nomination cannot be on at the same time",
+            icon: "error",
+            button: "I understand",
+          })
+          .then(results => {
+            $('.modal').removeClass('is-active');
+            location.reload();
+          });
+        }
       },
       error: function (result) {
         swal("Ooops!", "Sorry, something went wrong", "error");
@@ -295,16 +317,29 @@ $(document).ready(function () {
         id: id
       },
       success: function (result) {
-        swal({
-          title: "Successfully turned " + stat + " the nomination!",
-          text: text,
-          icon: "success",
-          button: "Yisss.",
-        })
-        .then(results => {
-          $('.modal').removeClass('is-active');
-          location.reload();
-        });
+        if (result.success === 'true') {
+          swal({
+            title: "Successfully turned " + stat + " the nomination!",
+            text: text,
+            icon: "success",
+            button: "Yisss.",
+          })
+          .then(results => {
+            $('.modal').removeClass('is-active');
+            location.reload();
+          });
+        } else {
+          swal({
+            title: "Aww, snap!",
+            text: "Sorry, voting and nomination cannot be on at the same time",
+            icon: "error",
+            button: "I understand",
+          })
+          .then(results => {
+            $('.modal').removeClass('is-active');
+            location.reload();
+          });
+        }
       },
       error: function (result) {
         swal("Ooops!", "Sorry, something went wrong", "error");

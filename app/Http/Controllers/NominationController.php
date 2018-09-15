@@ -56,34 +56,16 @@ class NominationController extends Controller
         }
     }
 
+    /**
+     * This function shows the users who voted/did not vote.
+     * Users who voted are the ones with at least one vote
+     * @return [type] [description]
+     */
     public function viewVoters()
     {
         $quarter = Quarter::where('active', 1)->pluck('id')->first();
-        $voted = User::select('*')
-                    ->leftJoin('nominations', 'nominations.user_id', '=', 'users.id')
-                    ->where(function ($query) {
-                        $query->where('category', 1)
-                        ->orWhere('category', 2)
-                        ->orWhere('category', 3);
-                    })
-                    ->where('quarter', $quarter)
-                    ->whereRaw('year(nominations.created_at)', now()->year)
-                    ->groupBy('users.id')
-                    ->havingRaw('count(users.id) = 3')
-                    ->get(['users.*']);
-        $notVoted = User::select('*')
-                    ->leftJoin('nominations', 'nominations.user_id', '=', 'users.id')
-                    ->whereNull('nominations.user_id')
-                    ->orWhere(function ($query) {
-                        $query->where('category', 1)
-                        ->orWhere('category', 2)
-                        ->orWhere('category', 3);
-                    })
-                    ->where('quarter', $quarter)
-                    ->whereRaw('year(nominations.created_at)', now()->year)
-                    ->groupBy('users.id')
-                    ->havingRaw('count(users.id) != 3')
-                    ->get();
+        $voted = DB::select('select * from users where id in (select user_id from votes where (category = 1 or category = 2 or category = 3) and quarter = ? and year(created_at) = ?)', [$quarter, now()->year]);
+        $notVoted = DB::select('select * from users where id not in (select user_id from votes where (category = 1 or category = 2 or category = 3) and quarter = ? and year(created_at) = ?)', [$quarter, now()->year]);
         return view('voters', compact('voted', 'notVoted'));
     }
 
@@ -180,7 +162,11 @@ class NominationController extends Controller
         $donePeopleDeveloper = $this->voteDone(2);
         $doneBusinessOperator = $this->voteDone(3);
 
-        return view('vote', compact('users', 'valueCreatorNominations', 'peopleDeveloperNominations', 'businessOperatorNominations', 'valueCreatorExplanations', 'peopleDeveloperExplanations', 'businessOperatorExplanations', 'doneValueCreator', 'donePeopleDeveloper', 'doneBusinessOperator'));
+        $votedVC = $this->voteDonePeople(1);
+        $votedPD = $this->voteDonePeople(2);
+        $votedBO = $this->voteDonePeople(3);
+
+        return view('vote', compact('users', 'valueCreatorNominations', 'peopleDeveloperNominations', 'businessOperatorNominations', 'valueCreatorExplanations', 'peopleDeveloperExplanations', 'businessOperatorExplanations', 'doneValueCreator', 'donePeopleDeveloper', 'doneBusinessOperator', 'votedVC', 'votedPD', 'votedBO'));
     }
 
     public function addVote(Request $request)
@@ -226,6 +212,12 @@ class NominationController extends Controller
                     ->whereRaw('year(created_at)', now()->year)
                     ->get();
         return count($vote) >= 5;
+    }
+
+    public function voteDonePeople(int $category)
+    {
+        $quarter = Quarter::where('active', 1)->pluck('id')->first();
+        return DB::select('select distinct nominee from nominations where category = ? and quarter = ? and year(created_at) = ? and nominee not in (select nominee from votes where user_id = ? and category = ? and quarter = ? and year(created_at) = ?)', [$category, $quarter, now()->year, auth()->user()->id, $category, $quarter, now()->year]);
     }
 
     private function sortExplanationToUsers($category) {

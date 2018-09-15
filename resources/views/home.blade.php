@@ -19,18 +19,18 @@
           <p class="mb-2"><strong>Categories:</strong></p>
           <ol>
             <li>
-              <strong>People Developer</strong>
-              <ul>
-                <li>Individual that exemplify leadership skill of developing other people to do better job as well as continuously improving oneself technically and functionally in the organization.</li>
-                <li>Being able to recognize achievements and contributions within the team.</li>
-              </ul>
-            </li>
-
-            <li>
               <strong>Value Creator</strong>
               <ul>
                 <li>Individual that exemplify improvements to delivery outcomes and continuously achieving higher client satisfaction on the delivery.</li>
                 <li>Being able to provide continuous improvement and sustainable process changes within the team.</li>
+              </ul>
+            </li>
+
+            <li>
+              <strong>People Developer</strong>
+              <ul>
+                <li>Individual that exemplify leadership skill of developing other people to do better job as well as continuously improving oneself technically and functionally in the organization.</li>
+                <li>Being able to recognize achievements and contributions within the team.</li>
               </ul>
             </li>
 
@@ -73,12 +73,12 @@
       <footer class="card-content">
         <p class="card-footer-item">
           <span>
-            @if(auth()->user()->nominationOpen())
+            @if(auth()->user()->nominationOpen() && (auth()->user()->type !== 3))
               <a href="/nominate" class="button is-primary">
                 Nominate
               </a>
             @elseif(auth()->user()->votingOpen())
-              @if(!auth()->user()->voted())
+              @if(!auth()->user()->voted() && (auth()->user()->type !== 3))
                 <a href="/vote" class="button is-warning">
                   Vote
                 </a>

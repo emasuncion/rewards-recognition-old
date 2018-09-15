@@ -22,9 +22,13 @@
             </div>
         </td>
         {{-- <td>{{ $vcVote->vote }}</td> --}}
-        @if(!$doneValueCreator)
-          <td><button class="btn btn-dark btn-sm add-vote-vc">VOTE</button></td>
-        @endif
+        <td>
+        @foreach($votedVC as $vvc)
+          @if(!$doneValueCreator && ($vvc->nominee === $vcVote->nominee))
+            <button class="btn btn-dark btn-sm add-vote-vc">VOTE</button>
+          @endif
+        @endforeach
+        </td>
       </tr>
     @endforeach
   </table>
@@ -52,9 +56,13 @@
             </div>
         </td>
         {{-- <td>{{ $pdVote->vote }}</td> --}}
-        @if(!$donePeopleDeveloper)
-          <td><button class="btn btn-dark btn-sm add-vote-pd">VOTE</button></td>
-        @endif
+        <td>
+        @foreach($votedPD as $vpd)
+          @if(!$donePeopleDeveloper && ($vpd->nominee == $pdVote->nominee))
+            <button class="btn btn-dark btn-sm add-vote-pd">VOTE</button>
+          @endif
+        @endforeach
+        </td>
       </tr>
       @endforeach
   </table>
@@ -82,9 +90,13 @@
             </div>
         </td>
         {{-- <td>{{ $boVote->vote }}</td> --}}
-        @if(!$doneBusinessOperator)
-          <td><button class="btn btn-dark btn-sm add-vote-bo">VOTE</button></td>
-        @endif
+        <td>
+        @foreach($votedBO as $vbo)
+          @if(!$doneBusinessOperator && ($vbo->nominee == $boVote->nominee))
+            <button class="btn btn-dark btn-sm add-vote-bo">VOTE</button>
+          @endif
+        @endforeach
+        </td>
       </tr>
       @endforeach
   </table>
