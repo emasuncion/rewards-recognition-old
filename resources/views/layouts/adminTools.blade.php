@@ -9,7 +9,7 @@
         @endphp
         @if($view === 'voters')
           <i class="far fa-check-square"></i>
-        @elseif($view === 'results')
+        @elseif($view === 'results' || $view === 'nominations')
           <i class="fas fa-clipboard-list"></i>
         @else
           <i class="far fa-chart-bar"></i> <i class="soon">(Soon)</i>

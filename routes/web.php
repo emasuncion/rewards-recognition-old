@@ -28,6 +28,15 @@ Route::get('nominate', 'NominationController@index')
     ->middleware('nomination_open')
     ->middleware('quarter_open')
     ->name('nominate');
+Route::get('myNominations', 'NominationController@myNominations')
+    ->middleware('nomination_open')
+    ->middleware('quarter_open')
+    ->name('myNominations');
+Route::get('nominations', 'NominationController@nominations')
+    ->middleware('nomination_open')
+    ->middleware('quarter_open')
+    ->middleware('is_admin')
+    ->name('nominations');
 Route::get('vote', 'NominationController@vote')
     ->middleware('voting_open')
     ->middleware('quarter_open')

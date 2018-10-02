@@ -15,12 +15,14 @@ use App\Explanations;
 
 class AdminController extends Controller
 {
+    private $quarter;
     /**
      * Create a new Admin controller instance
      */
     public function __construct()
     {
         $this->middleware('auth');
+        $this->quarter = Quarter::where('active', 1)->pluck('id')->first();
     }
 
     /**
@@ -135,15 +137,14 @@ class AdminController extends Controller
 
     public function tieBreaker()
     {
-        $quarter = Quarter::where('active', 1)->pluck('id')->first();
         $valueCreatorTie = self::nomineeTieBreaker(1);
         $peopleDeveloperTie = self::nomineeTieBreaker(2);
         $businessOperatorTie = self::nomineeTieBreaker(3);
-        $valueCreatorExplanations = DB::select('select * from nominations left join explanations on nominations.id = explanations.nomination_id where year(nominations.created_at) = ? and category = 1 and quarter = ? and explanation is not null', [now()->year, $quarter]);
+        $valueCreatorExplanations = DB::select('select * from nominations left join explanations on nominations.id = explanations.nomination_id where year(nominations.created_at) = ? and category = 1 and quarter = ? and explanation is not null', [now()->year, $this->quarter]);
         $valueCreatorExplanations = self::sortExplanationToUsers($valueCreatorExplanations);
-        $peopleDeveloperExplanations = DB::select('select * from nominations left join explanations on nominations.id = explanations.nomination_id where year(nominations.created_at) = ? and category = 2 and quarter = ? and explanation is not null', [now()->year, $quarter]);
+        $peopleDeveloperExplanations = DB::select('select * from nominations left join explanations on nominations.id = explanations.nomination_id where year(nominations.created_at) = ? and category = 2 and quarter = ? and explanation is not null', [now()->year, $this->quarter]);
         $peopleDeveloperExplanations = self::sortExplanationToUsers($peopleDeveloperExplanations);
-        $businessOperatorExplanations = DB::select('select * from nominations left join explanations on nominations.id = explanations.nomination_id where year(nominations.created_at) = ? and category = 3 and quarter = ? and explanation is not null', [now()->year, $quarter]);
+        $businessOperatorExplanations = DB::select('select * from nominations left join explanations on nominations.id = explanations.nomination_id where year(nominations.created_at) = ? and category = 3 and quarter = ? and explanation is not null', [now()->year, $this->quarter]);
         $businessOperatorExplanations = self::sortExplanationToUsers($businessOperatorExplanations);
 
         return view('tieBreaker', compact('valueCreatorTie', 'peopleDeveloperTie', 'businessOperatorTie', 'valueCreatorExplanations', 'peopleDeveloperExplanations', 'businessOperatorExplanations'));
@@ -151,9 +152,7 @@ class AdminController extends Controller
 
     private function nomineeTieBreaker(int $category)
     {
-        $quarter = Quarter::where('active', 1)->pluck('id')->first();
-        $tieBreaker = DB::select('select id, nominee, count(*) as count from votes where quarter = ? and YEAR(created_at) = ? and category = ? group by nominee having count = (select max(count) from (select count(*) as count from votes where quarter = ? and year(created_at) = ? and category = ? group by nominee ) as count)', [$quarter, now()->year, $category, $quarter, now()->year, $category]);
-        return $tieBreaker;
+        return DB::select('select id, nominee, count(*) as count from votes where quarter = ? and YEAR(created_at) = ? and category = ? group by nominee having count = (select max(count) from (select count(*) as count from votes where quarter = ? and year(created_at) = ? and category = ? group by nominee ) as count)', [$this->quarter, now()->year, $category, $this->quarter, now()->year, $category]);
     }
 
     private function sortExplanationToUsers($category) {
@@ -167,7 +166,6 @@ class AdminController extends Controller
 
             $result[$value->nominee][] = $value->explanation;
         }
-        // dd($result);
         return $result;
     }
 }

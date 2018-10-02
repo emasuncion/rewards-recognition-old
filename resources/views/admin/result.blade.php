@@ -4,7 +4,7 @@
   <div class="container">
     <div class="row">
       <div class="col">
-        <div class="card h-100">
+        <div class="card">
           <header class="card-header">
             <p class="card-header-title is-centered">
               Value Creator
@@ -19,7 +19,7 @@
       </div>
 
       <div class="col">
-        <div class="card h-100">
+        <div class="card">
           <header class="card-header">
             <p class="card-header-title is-centered">
               People Developer
@@ -34,7 +34,7 @@
       </div>
 
       <div class="col">
-        <div class="card h-100">
+        <div class="card">
           <header class="card-header">
             <p class="card-header-title is-centered">
               Business Operator

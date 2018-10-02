@@ -46,6 +46,11 @@ class User extends Authenticatable
         return $this->type === self::ADMIN;
     }
 
+    public function isGuest()
+    {
+        return $this->type === self::GUEST;
+    }
+
     public function voted()
     {
         $quarter = Quarter::where('active', 1)->pluck('id')->first();

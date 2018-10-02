@@ -11,6 +11,9 @@
     </div>
 
     <div class="row justify-content-center">
-      @include('layouts.adminTools', ['tools' => ['Voters', 'Results', 'Graph']])
+      @php
+        $tools = auth()->user()->nominationOpen() ? ['Voters', 'Nominations', 'Graph'] : ['Voters', 'Results', 'Graph'];
+      @endphp
+      @include('layouts.adminTools', compact('tools'))
     </div>
 @endsection

@@ -176,3 +176,7 @@ td.admin-options {
 .award-forward-add-cursor {
   cursor: pointer;
 }
+
+.cup-shield {
+  height: 40px;
+}

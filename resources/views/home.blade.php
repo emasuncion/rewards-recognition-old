@@ -96,6 +96,26 @@
         </p>
       </footer>
     </div>
+
+    {{-- Nominations Card --}}
+      @if(auth()->user()->nominationOpen())
+        <div class="default-card-vote card vote-card col-md-5 mt-4">
+          <div class="card-header">
+            <p class="title vote-title">
+              My Nominations
+            </p>
+          </div>
+          <footer class="card-content">
+            <p class="card-footer-item">
+              <span>
+                <a href="/myNominations" class="button is-warning">
+                  View
+                </a>
+              </span>
+            </p>
+          </footer>
+        </div>
+      @endif
     @endif
   </div>
 @endsection
