@@ -1,4 +1,4 @@
-@extends('default.default')
+  @extends('default.default')
 
 @section('default-body')
   <div class="row justify-content-center">
@@ -11,9 +11,8 @@
 
         <div style="text-align: center">
           <p><u>You may:</u></p>
-          <p>Nominate to count as one vote.</p>
-          <p>Nominate to add more points of recognition.</p>
-          <p>Vote for a colleague whom is already nominated for you. </p>
+          <p>Nominate anyone as much as you want during nomination period.</p>
+          <p>Run through all explanations and cast 3 votes per category during voting period.</p>
         </div>
 
           <p class="mb-2"><strong>Categories:</strong></p>
