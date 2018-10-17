@@ -29,7 +29,7 @@
                         <a class="nav-link heading2" href="/admin">Home</a>
                     </li>
                     @php
-                        $routes = ['results', 'vote', 'nominate'];
+                        $routes = ['results', 'vote', 'nominate', 'nominations'];
                     @endphp
                     @if(auth()->user()->isAdmin() && !auth()->user()->voted() && auth()->user()->nominationOpen() && (in_array(Route::current()->getName(), $routes)))
                         <li class="nav-item">

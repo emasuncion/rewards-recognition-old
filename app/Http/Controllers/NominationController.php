@@ -263,7 +263,7 @@ class NominationController extends Controller
                     ->where('quarter', $this->quarter)
                     ->whereRaw('year(created_at)', now()->year)
                     ->get();
-        return count($vote) >= 5;
+        return count($vote) >= 3;
     }
 
     public function voteDonePeople(int $category)

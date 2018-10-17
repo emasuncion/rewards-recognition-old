@@ -25,7 +25,7 @@
   <div class="field-body">
     <div class="field">
       <div class="control">
-        <textarea name="explanation_{{ $shorthand }}" class="textarea" placeholder="Give a brief description of your nominee for the position {{ $position }}"></textarea>
+        <textarea minlength="140" name="explanation_{{ $shorthand }}" class="textarea" placeholder="Give a brief description of your nominee for the position {{ $position }}"></textarea>
       </div>
     </div>
   </div>
