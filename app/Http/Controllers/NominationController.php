@@ -14,13 +14,14 @@ use Illuminate\Support\Facades\DB;
 class NominationController extends Controller
 {
     private $quarter;
+    private $users;
 
     public function __construct()
     {
         $this->middleware('auth');
-        $this->employee = new User;
         $this->nomination = new Nominations;
         $this->quarter = Quarter::where('active', 1)->pluck('id')->first();
+        $this->users = User::where('type', '!=', 3)->get();
     }
 
     /**
@@ -29,7 +30,7 @@ class NominationController extends Controller
      */
     public function index()
     {
-        $users = User::all();
+        $users = $this->users;
         $doneValueCreator = Vote::where('user_id', auth()->user()->id)
                             ->where('category', 1)
                             ->where('quarter', $this->quarter)
@@ -65,8 +66,8 @@ class NominationController extends Controller
      */
     public function viewVoters()
     {
-        $voted = DB::select('select * from users where id in (select user_id from votes where (category = 1 or category = 2 or category = 3) and quarter = ? and year(created_at) = ?)', [$this->quarter, now()->year]);
-        $notVoted = DB::select('select * from users where id not in (select user_id from votes where (category = 1 or category = 2 or category = 3) and quarter = ? and year(created_at) = ?)', [$this->quarter, now()->year]);
+        $voted = DB::select('select * from users where id in (select user_id from votes where (category = 1 or category = 2 or category = 3) and quarter = ? and year(created_at) = ?) and type != 3', [$this->quarter, now()->year]);
+        $notVoted = DB::select('select * from users where id not in (select user_id from votes where (category = 1 or category = 2 or category = 3) and quarter = ? and year(created_at) = ?) and type != 3', [$this->quarter, now()->year]);
         return view('voters', compact('voted', 'notVoted'));
     }
 
@@ -128,7 +129,7 @@ class NominationController extends Controller
      */
     public function vote()
     {
-        $users = User::all();
+        $users = $this->users;
         $valueCreatorNominations = Nominations::select(\DB::raw('id, nominee, count(nominee) as vote'))
                                 ->where('category', 1)
                                 ->where('quarter', $this->quarter)
