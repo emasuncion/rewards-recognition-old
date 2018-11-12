@@ -1,5 +1,5 @@
 @foreach($tools as $tool)
-<div class="col-sm">
+<div class="col-sm mb-4">
   <div class="card">
     <div class="card-content">
       <p class="title admin-cards-header">
