@@ -180,3 +180,13 @@ td.admin-options {
 .cup-shield {
   height: 40px;
 }
+
+.navbar > .container {
+  display: flex !important;
+}
+
+@media (max-width: 576px) {
+  .app-name {
+    display: none;
+  }
+}

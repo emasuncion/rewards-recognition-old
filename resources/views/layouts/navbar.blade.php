@@ -2,7 +2,7 @@
     <div class="container">
         <a class="navbar-brand" href="{{ url('/') }}">
             <img class="cup-shield" src="{{ asset('images/cupshield.jpg') }}">
-            {{ config('app.name', 'Laravel') }}
+            <label class="app-name">{{ config('app.name', 'Laravel') }}</label>
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
             <span class="navbar-toggler-icon"></span>

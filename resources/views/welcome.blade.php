@@ -69,6 +69,18 @@
               top: 30px;
               left: 5em;
             }
+
+            @media (max-width: 576px) {
+                .cup-logo {
+                    width: 200px;
+                    top: 70px;
+                    left: 3.5em;
+                }
+
+                .title {
+                    font-size: 35px;
+                }
+            }
         </style>
     </head>
     <body>
