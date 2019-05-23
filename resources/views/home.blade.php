@@ -6,8 +6,20 @@
       <div class="welcome-message">
         <div class="mb-4">
           <p class="h3">A chance to be acknowledged; a chance to commend fellow colleagues.</p>
-          <p style="text-align: center;">Recognize efforts by participating on our online nomination and voting board.</p>
-          <br/>
+          <div class="body">
+            <h1 class="h5" style="text-align: center;">What is Rewards vs. Recognition (R&R)</h1>
+            <p class="mb-2">
+              <strong>Rewards</strong> are items such as: gift cards, cash, or perks such as time off or discounts earned through receiving recognition or achieving your goals within an incentive program while <strong>Recognition</strong> is a discretionary act to recognize something great that might come in the form of a social posting, an e-card, a physical note or greeting card, a verbal "thank you," etc.
+            </p>
+
+            <p class="mt-2">
+              Rewards is also called Monetary award while Recognition is not.
+            </p>
+
+            <p class="mt-2 mb-4">
+              In the Education platform, both Rewards and Recognition are practiced as one a means to promote people engagement and appreciation to one's contribution to the group.
+            </p>
+          </div>
 
         <div style="text-align: center">
           <p><u>You may:</u></p>
