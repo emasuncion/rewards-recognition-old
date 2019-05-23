@@ -213,4 +213,6 @@ return [
 
     ],
 
+    'log' => 'errorlog',
+
 ];
