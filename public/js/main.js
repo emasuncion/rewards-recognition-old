@@ -31,7 +31,7 @@ $(document).ready(function () {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
       },
       type: 'POST',
-      url: "{{ route('/addVote/') }}",
+      url: "{{ route('/addVote') }}",
       data: {
         nominee: nominee,
         position: 'value-creator'
@@ -65,7 +65,7 @@ $(document).ready(function () {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
       },
       type: 'POST',
-      url: '/addVote/',
+      url: "{{ route('/addVote') }}",
       data: {
         nominee: nominee,
         position: 'people-developer'
@@ -99,7 +99,7 @@ $(document).ready(function () {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
       },
       type: 'POST',
-      url: '/addVote/',
+      url: "{{ route('/addVote') }}",
       data: {
         nominee: nominee,
         position: 'business-operator'
@@ -132,7 +132,7 @@ $(document).ready(function () {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
       },
       type: 'POST',
-      url: '/admin/changeRole/',
+      url: "{{ route('/admin/changeRole') }}",
       data: {
         isAdmin: checked,
         userId: userId
@@ -166,7 +166,7 @@ $(document).ready(function () {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
       },
       type: 'POST',
-      url: '/admin/changeQuarter/',
+      url: "{{ route('/admin/changeQuarter') }}",
       data: {
         quarter: quarter,
         active: active,
@@ -227,7 +227,7 @@ $(document).ready(function () {
               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             type: 'POST',
-            url: '/admin/deleteUser/',
+            url: "{{ route('/admin/deleteUser') }}",
             data: {
               userId: id
             },
@@ -265,7 +265,7 @@ $(document).ready(function () {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
       },
       type: 'POST',
-      url: '/admin/turnVote',
+      url: "{{ route('/admin/turnVote') }}",
       data: {
         id: id
       },
@@ -312,7 +312,7 @@ $(document).ready(function () {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
       },
       type: 'POST',
-      url: '/admin/turnNomination',
+      url: "{{ route('/admin/turnNomination') }}",
       data: {
         id: id
       },
