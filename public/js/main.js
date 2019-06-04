@@ -31,7 +31,7 @@ $(document).ready(function () {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
       },
       type: 'POST',
-      url: "{{ route('/addVote') }}",
+      url: "{{ route('/addVote/') }}",
       data: {
         nominee: nominee,
         position: 'value-creator'
