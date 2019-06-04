@@ -30,7 +30,7 @@ $(document).ready(function () {
       headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
       },
-      type: 'POST',
+      type: 'PUT',
       url: '/addVote/',
       data: {
         nominee: nominee,
@@ -64,7 +64,7 @@ $(document).ready(function () {
       headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
       },
-      type: 'POST',
+      type: 'PUT',
       url: '/addVote/',
       data: {
         nominee: nominee,
@@ -98,7 +98,7 @@ $(document).ready(function () {
       headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
       },
-      type: 'POST',
+      type: 'PUT',
       url: '/addVote/',
       data: {
         nominee: nominee,
@@ -131,7 +131,7 @@ $(document).ready(function () {
       headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
       },
-      type: 'POST',
+      type: 'PUT',
       url: '/admin/changeRole/',
       data: {
         isAdmin: checked,
@@ -165,7 +165,7 @@ $(document).ready(function () {
       headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
       },
-      type: 'POST',
+      type: 'PUT',
       url: '/admin/changeQuarter/',
       data: {
         quarter: quarter,
@@ -226,7 +226,7 @@ $(document).ready(function () {
             headers: {
               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
-            type: 'POST',
+            type: 'DELETE',
             url: '/admin/deleteUser/',
             data: {
               userId: id
@@ -264,7 +264,7 @@ $(document).ready(function () {
       headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
       },
-      type: 'POST',
+      type: 'PUT',
       url: '/admin/turnVote',
       data: {
         id: id
@@ -311,7 +311,7 @@ $(document).ready(function () {
       headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
       },
-      type: 'POST',
+      type: 'PUT',
       url: '/admin/turnNomination',
       data: {
         id: id
